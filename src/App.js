@@ -182,6 +182,11 @@ function App() {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      try {
+        await axios.post(`${API_URL}/api/plugin/register-token`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } catch (e) {}
       setUser(user);
       await fetchSessions();
       await fetchPlans();
@@ -224,6 +229,11 @@ function App() {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      try {
+        await axios.post(`${API_URL}/api/plugin/register-token`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } catch (e) {}
       setUser(user);
       await fetchSessions();
       await fetchPlans();
