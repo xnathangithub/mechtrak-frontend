@@ -251,10 +251,8 @@ function App() {
         headers: getAuthHeaders()
       });
       setSessions(response.data.sessions);
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching sessions:', error);
-      setLoading(false);
     }
   };
 
