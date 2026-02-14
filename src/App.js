@@ -15,19 +15,13 @@ function App() {
   const [customPlanName, setCustomPlanName] = useState('');
   const [customPlanDesc, setCustomPlanDesc] = useState('');
   const [customShotNames, setCustomShotNames] = useState(['']);
-  const [showLibrary, setShowLibrary] = useState(false);
   const [currentView, setCurrentView] = useState('home');
-  const [loading, setLoading] = useState(true);
   const [statsDateRange, setStatsDateRange] = useState({ start: '', end: '' });
   const [selectedSessionIds, setSelectedSessionIds] = useState([]);
   const [showSessionSelector, setShowSessionSelector] = useState(false);
   const [availableSessions, setAvailableSessions] = useState([]);
   const [statsChartType, setStatsChartType] = useState('line');
   const [statsChartMode, setStatsChartMode] = useState('overview');
-  const [statsChartColors, setStatsChartColors] = useState({
-    primary: '#a855f7',
-    secondary: '#00d4ff'
-  });
   const [user, setUser] = useState(null);
   const [authView, setAuthView] = useState('login');
   const [authEmail, setAuthEmail] = useState('');
