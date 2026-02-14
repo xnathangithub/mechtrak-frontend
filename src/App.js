@@ -195,7 +195,9 @@ function App() {
         await axios.post(`${API_URL}/api/plugin/register-token`, {}, {
           headers: { Authorization: `Bearer ${token}` }
         });
-      } catch (e) {}
+      } catch (e) {
+          console.log('register-token failed:', e.response?.status, e.response?.data);
+      }
       setUser(user);
       await fetchSessions();
       await fetchPlans();
