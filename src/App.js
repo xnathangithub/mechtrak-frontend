@@ -80,6 +80,7 @@ function App() {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -87,6 +88,7 @@ function App() {
     }
   }, [user]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const init = async () => {
       await checkAuth();
@@ -96,6 +98,7 @@ function App() {
     init();
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Only poll when on sessions or stats page
     if (currentView !== 'sessions' && currentView !== 'stats') return;
@@ -112,6 +115,7 @@ function App() {
   }, [currentView]);
 
   //auto update stats in session shot view 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (selectedSession) {
       const updated = sessions.find(s => s.id === selectedSession.id);
@@ -131,7 +135,7 @@ function App() {
     }
     
     try {
-      const response = await axios.get('${API_URL}/api/auth/verify', {
+      const response = await axios.get(`${API_URL}/api/auth/verify`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -176,7 +180,7 @@ function App() {
     }
 
     try {
-      const response = await axios.post('${API_URL}/api/auth/login', {
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         email: authEmail,
         password: authPassword
       });
@@ -217,7 +221,7 @@ function App() {
     }
 
     try {
-      const response = await axios.post('${API_URL}/api/auth/register', {
+      const response = await axios.post(`${API_URL}/api/auth/register`, {
         email: authEmail,
         password: authPassword,
         username: authUsername
@@ -249,7 +253,7 @@ function App() {
 
   const fetchSessions = async () => {
     try {
-      const response = await axios.get('${API_URL}/api/sessions', {
+      const response = await axios.get(`${API_URL}/api/sessions`, {
         headers: getAuthHeaders()
       });
       setSessions(response.data.sessions);
@@ -262,7 +266,7 @@ function App() {
 
   const fetchPlans = async () => {
     try {
-      const response = await axios.get('${API_URL}/api/plans', {
+      const response = await axios.get(`${API_URL}/api/plans`, {
         headers: getAuthHeaders()
       });
       setPlans(response.data.plans);
@@ -310,7 +314,7 @@ function App() {
     }
     
     try {
-      const response = await axios.post('${API_URL}/api/plans', {
+      const response = await axios.post(`${API_URL}/api/plans`, {
         name: customPlanName,
         description: customPlanDesc,
         shot_names: filteredShots
@@ -355,7 +359,7 @@ function App() {
   const startSessionWithPlan = async (planId) => {
     setStartingSession(true);
     try {
-      const response = await axios.post('${API_URL}/api/sessions/start', {
+      const response = await axios.post(`${API_URL}/api/sessions/start`, {
         plan_id: planId
       }, { headers: getAuthHeaders() });
       
@@ -392,13 +396,14 @@ function App() {
     setSelectedSessionIds(filtered.map(s => s.id));
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (currentView !== 'connecting') return;
     
     const checkConnection = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('${API_URL}/api/heartbeat/check', {
+        const response = await axios.get(`${API_URL}/api/heartbeat/check`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -418,6 +423,7 @@ function App() {
     return () => clearInterval(interval);
   }, [currentView]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (sessions.length > 0) {
       if (!statsDateRange.start && !statsDateRange.end) {
@@ -435,7 +441,7 @@ function App() {
       }
     }
   }, [sessions]);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (sessions.length > 0 && statsDateRange.start && statsDateRange.end) {
       filterSessionsByDate();
