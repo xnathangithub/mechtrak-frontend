@@ -122,7 +122,6 @@ function App() {
 
   const checkAuth = async () => {
     const token = localStorage.getItem('token');
-    
     if (!token) {
       setCheckingAuth(false);
       return;
@@ -135,16 +134,21 @@ function App() {
       
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setUser(response.data.user);
+      
+      // Register token for plugin every time app loads
+      try {
+        await axios.post(`${API_URL}/api/plugin/register-token`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } catch (e) {}
+      
       setCurrentView('connecting');
     } catch (error) {
-      // Only log out on 401 (invalid token), NOT on 429 (rate limit)
       if (error.response?.status === 401) {
         localStorage.removeItem('token');
       } else if (error.response?.status === 429) {
-        // Rate limited - keep token, just set the user from token data
         console.log('Rate limited on verify, keeping session');
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // Decode token manually to get user info
         try {
           const payload = JSON.parse(atob(token.split('.')[1]));
           setUser({ id: payload.userId, email: payload.email });
