@@ -136,6 +136,8 @@ function App() {
       setUser(response.data.user);
       
       // Register token for plugin every time app loads
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
       try {
         await axios.post(`${API_URL}/api/plugin/register-token`, {}, {
           headers: { Authorization: `Bearer ${token}` }
@@ -186,6 +188,9 @@ function App() {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       try {
         await axios.post(`${API_URL}/api/plugin/register-token`, {}, {
           headers: { Authorization: `Bearer ${token}` }
@@ -233,6 +238,9 @@ function App() {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       try {
         await axios.post(`${API_URL}/api/plugin/register-token`, {}, {
           headers: { Authorization: `Bearer ${token}` }
