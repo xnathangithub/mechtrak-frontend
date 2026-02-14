@@ -3,6 +3,8 @@ import axios from 'axios';
 import './App.css';
 import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+const API_URL = 'https://mechtrak-backend-production.up.railway.app';
+
 function App() {
   const [sessions, setSessions] = useState([]);
   const [plans, setPlans] = useState([]);
@@ -55,7 +57,7 @@ function App() {
   
   const deleteSession = async (sessionId) => {
   try {
-    await axios.delete(`http://localhost:3000/api/sessions/${sessionId}`);
+    await axios.delete(`${API_URL}/api/sessions/${sessionId}`);
     await fetchSessions();
     if (selectedSession?.session_id === sessionId) {
       setSelectedSession(null);
@@ -69,7 +71,7 @@ function App() {
 
   const deletePlan = async (planId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/plans/${planId}`);
+      await axios.delete(`${API_URL}/api/plans/${planId}`);
       await fetchPlans();
       showToast('Plan deleted!');
     } catch (error) {
@@ -129,7 +131,7 @@ function App() {
     }
     
     try {
-      const response = await axios.get('http://localhost:3000/api/auth/verify', {
+      const response = await axios.get('${API_URL}/api/auth/verify', {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -174,7 +176,7 @@ function App() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/login', {
+      const response = await axios.post('${API_URL}/api/auth/login', {
         email: authEmail,
         password: authPassword
       });
@@ -215,7 +217,7 @@ function App() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/register', {
+      const response = await axios.post('${API_URL}/api/auth/register', {
         email: authEmail,
         password: authPassword,
         username: authUsername
@@ -247,7 +249,7 @@ function App() {
 
   const fetchSessions = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/sessions', {
+      const response = await axios.get('${API_URL}/api/sessions', {
         headers: getAuthHeaders()
       });
       setSessions(response.data.sessions);
@@ -260,7 +262,7 @@ function App() {
 
   const fetchPlans = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/plans', {
+      const response = await axios.get('${API_URL}/api/plans', {
         headers: getAuthHeaders()
       });
       setPlans(response.data.plans);
@@ -271,7 +273,7 @@ function App() {
 
   const renameSession = async (sessionId, newName) => {
     try {
-      await axios.patch(`http://localhost:3000/api/sessions/${sessionId}/rename`, {
+      await axios.patch(`${API_URL}/api/sessions/${sessionId}/rename`, {
         name: newName
       });
       await fetchSessions();
@@ -308,7 +310,7 @@ function App() {
     }
     
     try {
-      const response = await axios.post('http://localhost:3000/api/plans', {
+      const response = await axios.post('${API_URL}/api/plans', {
         name: customPlanName,
         description: customPlanDesc,
         shot_names: filteredShots
@@ -353,7 +355,7 @@ function App() {
   const startSessionWithPlan = async (planId) => {
     setStartingSession(true);
     try {
-      const response = await axios.post('http://localhost:3000/api/sessions/start', {
+      const response = await axios.post('${API_URL}/api/sessions/start', {
         plan_id: planId
       }, { headers: getAuthHeaders() });
       
@@ -396,7 +398,7 @@ function App() {
     const checkConnection = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/heartbeat/check', {
+        const response = await axios.get('${API_URL}/api/heartbeat/check', {
           headers: { Authorization: `Bearer ${token}` }
         });
         
