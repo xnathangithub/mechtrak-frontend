@@ -864,48 +864,54 @@ function App() {
                 </p>
                 
                 <div className="connecting-spinner">
-                  <div className="spinner"></div>
+                  {pluginConnected ? (
+                    <div className="connecting-checkmark">✓</div>
+                  ) : (
+                    <div className="spinner"></div>
+                  )}
                 </div>
-                
-                <div className="connecting-status">
-                  {pluginConnected 
-                    ? '✅ Plugin connected! Redirecting...' 
-                    : 'Waiting for plugin connection...'}
-                </div>
-                
-                <div className="install-instructions">
-                  <h3>Plugin not installed?</h3>
-                  <div className="instruction-steps">
-                    <div className="instruction-step">
-                      <div className="step-number">1</div>
-                      <div className="step-text">Download and install BakkesMod from <strong>bakkesmod.com</strong></div>
+
+                {!pluginConnected && (
+                  <>
+                    <div className="connecting-status">
+                      Waiting for plugin connection...
                     </div>
-                    <div className="instruction-step">
-                      <div className="step-number">2</div>
-                      <div className="step-text">Download the RL Best plugin .dll file</div>
+
+                    <div className="install-instructions">
+                      <h3>Plugin not installed?</h3>
+                      <div className="instruction-steps">
+                        <div className="instruction-step">
+                          <div className="step-number">1</div>
+                          <div className="step-text">Download and install BakkesMod from <strong>bakkesmod.com</strong></div>
+                        </div>
+                        <div className="instruction-step">
+                          <div className="step-number">2</div>
+                          <div className="step-text">Download the Mech Trak plugin .dll file</div>
+                        </div>
+                        <div className="instruction-step">
+                          <div className="step-number">3</div>
+                          <div className="step-text">Place the .dll in your BakkesMod plugins folder</div>
+                        </div>
+                        <div className="instruction-step">
+                          <div className="step-number">4</div>
+                          <div className="step-text">Launch Rocket League and open BakkesMod (F2)</div>
+                        </div>
+                        <div className="instruction-step">
+                          <div className="step-number">5</div>
+                          <div className="step-text">Enable the Mech Trak plugin in the plugins tab</div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="instruction-step">
-                      <div className="step-number">3</div>
-                      <div className="step-text">Place the .dll in your BakkesMod plugins folder</div>
-                    </div>
-                    <div className="instruction-step">
-                      <div className="step-number">4</div>
-                      <div className="step-text">Launch Rocket League and open BakkesMod (F2)</div>
-                    </div>
-                    <div className="instruction-step">
-                      <div className="step-number">5</div>
-                      <div className="step-text">Enable the RL Best plugin in the plugins tab</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <button 
-                  className="glossy-btn"
-                  style={{ marginTop: '30px' }}
-                  onClick={() => setCurrentView('home')}
-                >
-                  Skip for now
-                </button>
+
+                    <button 
+                      className="glossy-btn"
+                      style={{ marginTop: '30px' }}
+                      onClick={() => setCurrentView('home')}
+                    >
+                      Skip for now
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           )}
