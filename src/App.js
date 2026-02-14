@@ -244,7 +244,7 @@ function App() {
     setPlans([]);
     setCurrentView('home')
   };
-
+  //
   const fetchSessions = async () => {
     try {
       const response = await axios.get(`${API_URL}/api/sessions`, {
