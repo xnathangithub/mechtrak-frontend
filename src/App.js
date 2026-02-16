@@ -838,16 +838,17 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header">
+      <header className="header" style={{ borderBottom: currentView === 'sessions' ? 'none' : '1px solid #2a2a2a' }}>
         <div className="logo">MECH TRAK</div>
         <div className="header-actions">
-          {user && (
+          {user && currentView !== 'sessions' && (
             <button className="glossy-btn" onClick={logout} style={{ fontSize: '13px' }}>
               {user.username || user.email} ↪
             </button>
           )}
         </div>
-        <div className="profile-placeholder"></div>
+        {currentView !== 'sessions' && <div className="profile-placeholder"></div>}
+        {currentView === 'sessions' && <div></div>}
       </header>
 
       <div className="main-container">
@@ -1371,39 +1372,41 @@ function App() {
 
         {currentView !== 'plans' && currentView !== 'stats' && currentView !== 'home' && currentView !== 'connecting' && (
           <div className="discovery-sidebar">
-            <h2 className="discovery-title">Discovery</h2>
-            {sessions.length === 0 ? (
-              <p style={{ color: '#888' }}>No sessions yet. Start training!</p>
-            ) : (
-              sessions.map((session) => {
-                const accuracy = calculateAccuracy(session);
-                const colorClass = getAccuracyColor(accuracy);
-                const fillPercentage = session.total_attempts > 0 
-                  ? (session.total_goals / session.total_attempts) * 100 
-                  : 0;
-                return (
-                  <div 
-                    key={session.id} 
-                    className="session-bar"
-                    onClick={() => {
-                      setSelectedSession(session);
-                      setSelectedShot(null);
-                      setCurrentView('sessions');
-                    }}
-                  >
-                    <div className="session-info">
-                      <span className="session-name">
-                        {session.name || `Session ${session.session_id.slice(-8)}`}
-                      </span>
-                      <span className="session-accuracy">{session.total_goals}/{session.total_attempts}</span>
+            <div className="discovery-inner">
+              <h2 className="discovery-title">Discovery</h2>
+              {sessions.length === 0 ? (
+                <p style={{ color: '#888' }}>No sessions yet. Start training!</p>
+              ) : (
+                sessions.map((session) => {
+                  const accuracy = calculateAccuracy(session);
+                  const colorClass = getAccuracyColor(accuracy);
+                  const fillPercentage = session.total_attempts > 0 
+                    ? (session.total_goals / session.total_attempts) * 100 
+                    : 0;
+                  return (
+                    <div 
+                      key={session.id} 
+                      className="session-bar"
+                      onClick={() => {
+                        setSelectedSession(session);
+                        setSelectedShot(null);
+                        setCurrentView('sessions');
+                      }}
+                    >
+                      <div className="session-info">
+                        <span className="session-name">
+                          {session.name || `Session ${session.session_id.slice(-8)}`}
+                        </span>
+                        <span className="session-accuracy">{session.total_goals}/{session.total_attempts}</span>
+                      </div>
+                      <div className="progress-bar">
+                        <div className={`progress-fill ${colorClass}`} style={{ width: `${fillPercentage}%` }} />
+                      </div>
                     </div>
-                    <div className="progress-bar">
-                      <div className={`progress-fill ${colorClass}`} style={{ width: `${fillPercentage}%` }} />
-                    </div>
-                  </div>
-                );
-              })
-            )}
+                  );
+                })
+              )}
+            </div>
           </div>
         )}
       </div>
