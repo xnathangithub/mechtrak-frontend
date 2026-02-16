@@ -981,7 +981,7 @@ function App() {
             <div>
               
               {!selectedSession ? (
-                <div style={{ marginTop: '30px' }}>
+                <div style={{ marginTop: '10px' }}>
                   <h1 style={{ fontSize: '36px', marginBottom: '20px' }}>Sessions</h1>
                   {sessions.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>
@@ -1088,7 +1088,7 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <div style={{ marginTop: '30px' }}>
+                <div style={{ marginTop: '10px' }}>
                   <div style={{ marginBottom: '40px' }}>
                     {editingName ? (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
@@ -1197,7 +1197,7 @@ function App() {
           
           {currentView === 'plans' && (
             <div>
-              <div style={{ marginTop: '30px' }}>
+              <div style={{ marginTop: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
                   <div>
                     <h1 style={{ fontSize: '36px', marginBottom: '10px' }}>Training Plans</h1>
@@ -1513,7 +1513,7 @@ function App() {
                 <p style={{ color: '#888', textAlign: 'center', padding: '40px' }}>No sessions in this date range</p>
               ) : (
                 <>
-                  <div style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
+                  <div style={{ marginBottom: '10px', display: 'flex', gap: '10px' }}>
                     <button className="glossy-btn" style={{ fontSize: '12px', padding: '8px 12px' }} onClick={() => setSelectedSessionIds(availableSessions.map(s => s.id))}>Select All</button>
                     <button className="glossy-btn" style={{ fontSize: '12px', padding: '8px 12px' }} onClick={() => setSelectedSessionIds([])}>Deselect All</button>
                   </div>
