@@ -1275,16 +1275,6 @@ function App() {
                         setStatsPlanFilter(planId);
                         manuallyUnselectedIds.current.clear();
                         filterSessionsByDate(planId);
-                        // Also filter selected session IDs
-                        if (planId === 'all') {
-                          manuallyUnselectedIds.current.clear();
-                          setSelectedSessionIds(sessions.map(s => s.id));
-                        } else {
-                          const filtered = sessions.filter(s => s.plan_id === parseInt(planId));
-                          const unfiltered = sessions.filter(s => s.plan_id !== parseInt(planId));
-                          unfiltered.forEach(s => manuallyUnselectedIds.current.add(s.id));
-                          setSelectedSessionIds(filtered.map(s => s.id));
-                        }
                       }}
                       style={{ 
                         width: '100%',
