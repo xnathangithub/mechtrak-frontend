@@ -932,7 +932,7 @@ function App() {
                         </div>
                         <div className="instruction-step">
                           <div className="step-number">4</div>
-                          <div className="step-text">Launch Rocket League and start a session</div>
+                          <div className="step-text">Launch Rocket League and Click (F6) and enter "Plugin load MechTrak" </div>
                         </div>
                       </div>
                     </div>
