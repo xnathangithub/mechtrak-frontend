@@ -51,6 +51,7 @@ body {
   display: flex;
   height: calc(100vh - 81px);
   background: #070707;
+  margin-right: 320px;
 }
 
 /* Main Section (Left) */
@@ -60,7 +61,7 @@ body {
   overflow-y: auto;
   position: relative;
   background: #070707;
-  margin-right: 320px;
+  min-width: 0;
 }
 
 /* Discovery Sidebar (Right) */
@@ -69,7 +70,7 @@ body {
   background: #070707;
   border-left: none;
   padding: 12px 12px 12px 0;
-  overflow-y: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -86,15 +87,25 @@ body {
   display: flex;
   flex-direction: column;
   margin-top: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.discovery-sessions-list {
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 4px;
 }
 
 .discovery-title {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 24px;
   color: #ffffff;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.15em;
   text-align: center;
+  text-transform: uppercase;
+  font-family: var(--font-heading, 'Rajdhani', sans-serif);
 }
 
 /* Session Bars */
