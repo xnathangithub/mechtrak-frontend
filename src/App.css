@@ -46,6 +46,7 @@ body {
 .main-container {
   display: flex;
   height: calc(100vh - 81px);
+  background: #070707;
 }
 
 /* Main Section (Left) */
@@ -59,18 +60,30 @@ body {
 
 /* Discovery Sidebar (Right) */
 .discovery-sidebar {
-  width: 350px;
-  background: #070707;
-  border-left: 1px solid #2a2a2a;
-  padding: 30px 20px;
+  width: 320px;
+  background: #141414;
+  border-left: none;
+  padding: 20px 16px 20px 0;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.discovery-inner {
+  background: #1c1c1c;
+  border-radius: 16px;
+  padding: 24px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .discovery-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 24px;
   color: #ffffff;
+  letter-spacing: 0.05em;
 }
 
 /* Session Bars */
