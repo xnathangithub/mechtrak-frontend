@@ -857,13 +857,6 @@ function App() {
           }} style={{ cursor: 'pointer' }}>
           MECH TRAK
           </div>
-        <div className="header-actions">
-          {user && currentView !== 'sessions' && (
-            <button className="glossy-btn" onClick={logout} style={{ fontSize: '13px' }}>
-              {user.username || user.email} ↪
-            </button>
-          )}
-        </div>
         {currentView !== 'sessions' && <div className="profile-placeholder">
           <div style={{ position: 'relative' }}>
             <div 
@@ -939,11 +932,7 @@ function App() {
                         </div>
                         <div className="instruction-step">
                           <div className="step-number">4</div>
-                          <div className="step-text">Launch Rocket League and open BakkesMod (F2)</div>
-                        </div>
-                        <div className="instruction-step">
-                          <div className="step-number">5</div>
-                          <div className="step-text">Enable the Mech Trak plugin in the plugins tab</div>
+                          <div className="step-text">Launch Rocket League and start a session</div>
                         </div>
                       </div>
                     </div>
