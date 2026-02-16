@@ -38,14 +38,6 @@ body {
   letter-spacing: 2px;
 }
 
-.profile-placeholder {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #1a1a1a;
-  border: 2px solid #ffffff;
-}
-
 /* Main Layout */
 .main-container {
   display: flex;
