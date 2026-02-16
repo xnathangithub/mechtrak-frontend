@@ -1135,39 +1135,42 @@ function App() {
                     </div>
                   </div>
                   <h2 style={{ marginBottom: '20px', color: '#ffffff' }}>Shots</h2>
-                  <div className="shot-cards-container">
-                    {Object.entries(selectedSession.shots_data || {}).map(([shotNum, shot]) => {
-                      const accuracy = shot.attempts > 0 
-                        ? (shot.goals / shot.attempts) * 100 
-                        : -1;
-                      
-                      const accuracyClass = accuracy === -1 
-                        ? 'accuracy-none'
-                        : accuracy >= 50 
-                        ? 'accuracy-high' 
-                        : accuracy >= 25 
-                        ? 'accuracy-medium' 
-                        : 'accuracy-low';
+              <div className="shot-cards-container">
+                {Object.entries(selectedSession.shots_data || {}).map(([shotNum, shot]) => {
+                  const accuracy = shot.attempts > 0 
+                    ? (shot.goals / shot.attempts) * 100 
+                    : -1;
+                  
+                  const accuracyClass = accuracy === -1 
+                    ? 'accuracy-none'
+                    : accuracy >= 50 
+                    ? 'accuracy-high' 
+                    : accuracy >= 25 
+                    ? 'accuracy-medium' 
+                    : 'accuracy-low';
 
-                      return (
-                        <div 
-                          key={shotNum} 
-                          className={`shot-card ${accuracyClass}`}
-                          onClick={() => setSelectedShot({ shotNum, ...shot })}
-                        >
-                          <div className="shot-number">Shot {shotNum}</div>
-                          <div className="shot-type">{shotData.shotType || 'Unknown'}</div>
-                          <div className="vertical-bar-container">
-                            <div className="vertical-bar-background">
-                              <div className="vertical-bar-fill" style={{ height: `${accuracy}%`, background: '#ffffff' }} />
-                            </div>
-                            <div className="bar-label">{shotData.goals}/{shotData.attempts}</div>
-                          </div>
-                          <div className="shot-stats">{Math.round(accuracy)}%</div>
+                  return (
+                    <div 
+                      key={shotNum} 
+                      className={`shot-card ${accuracyClass}`}
+                      onClick={() => setSelectedShot({ shotNum, ...shot })}
+                    >
+                      <div className="shot-number">Shot {shotNum}</div>
+                      <div className="shot-type">{shot.shotType || 'Unknown'}</div>
+                      <div className="vertical-bar-container">
+                        <div className="vertical-bar-background">
+                          <div className="vertical-bar-fill" style={{ 
+                            height: `${accuracy === -1 ? 0 : accuracy}%`, 
+                            background: '#ffffff' 
+                          }} />
                         </div>
-                      );
-                    })}
-                  </div>
+                        <div className="bar-label">{shot.goals}/{shot.attempts}</div>
+                      </div>
+                      <div className="shot-stats">{accuracy === -1 ? '0%' : `${Math.round(accuracy)}%`}</div>
+                    </div>
+                  );
+                })}
+              </div>
                 </div>
               )}
             </div>
