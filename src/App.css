@@ -135,19 +135,93 @@ body {
 }
 
 .shot-card {
-  background: #0f0f0f;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 24px 16px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.3),
+    0 10px 15px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.shot-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
 }
 
 .shot-card:hover {
-  transform: translateY(-5px);
-  border-color: #ffffff;
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 8px 12px rgba(0, 0, 0, 0.4),
+    0 20px 30px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Color coding backgrounds */
+.shot-card.accuracy-high {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.shot-card.accuracy-high:hover {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow:
+    0 8px 12px rgba(0, 0, 0, 0.4),
+    0 20px 30px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(16, 185, 129, 0.1);
+}
+
+.shot-card.accuracy-medium {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.shot-card.accuracy-medium:hover {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow:
+    0 8px 12px rgba(0, 0, 0, 0.4),
+    0 20px 30px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(245, 158, 11, 0.1);
+}
+
+.shot-card.accuracy-low {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.shot-card.accuracy-low:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  box-shadow:
+    0 8px 12px rgba(0, 0, 0, 0.4),
+    0 20px 30px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(239, 68, 68, 0.1);
+}
+
+.shot-card.accuracy-none {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .shot-number {
@@ -1791,4 +1865,48 @@ body {
   0% { transform: scale(0); opacity: 0; }
   70% { transform: scale(1.2); }
   100% { transform: scale(1); opacity: 1; }
+}
+
+.rename-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.rename-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.delete-btn {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  transform: translateY(-1px);
 }
