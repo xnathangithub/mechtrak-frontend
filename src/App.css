@@ -51,6 +51,7 @@ body {
   display: flex;
   height: calc(100vh - 81px);
   background: #070707;
+  margin-right: 320px;
 }
 
 /* Main Section (Left) */
