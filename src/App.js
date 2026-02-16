@@ -473,7 +473,7 @@ function App() {
     if (sessions.length > 0 && statsDateRange.start && statsDateRange.end) {
       filterSessionsByDate();
     }
-  }, [statsDateRange, statsPlanFilter]);
+  }, [statsDateRange]);
 
   const prepareChartData = () => {
     const selectedSessions = sessions.filter(s => 
