@@ -1368,7 +1368,7 @@ function App() {
           )}
         </div>
 
-        {currentView !== 'plans' && currentView !== 'stats' && currentView !== 'home' && currentView !== 'connecting' && (
+        {currentView !== 'plans' && currentView !== 'stats' && currentView !== 'home' && !selectedShot && currentView !== 'connecting' && (
           <div className="discovery-sidebar">
             <div className="discovery-inner">
               <h2 className="discovery-title">Discovery</h2>
