@@ -838,8 +838,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header" style={{ borderBottom: currentView === 'sessions' ? 'none' : '1px solid #2a2a2a' }}>
-        <div className="logo">MECH TRAK</div>
+      <header className={`header ${currentView === 'sessions' ? 'no-border' : ''}`}>        <div className="logo">MECH TRAK</div>
         <div className="header-actions">
           {user && currentView !== 'sessions' && (
             <button className="glossy-btn" onClick={logout} style={{ fontSize: '13px' }}>
