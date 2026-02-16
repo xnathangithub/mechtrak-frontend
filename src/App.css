@@ -27,6 +27,10 @@ body {
   background: #070707;
 }
 
+.header.no-border {
+  border-bottom: none;
+}
+
 .logo {
   font-size: 24px;
   font-weight: 700;
@@ -61,9 +65,9 @@ body {
 /* Discovery Sidebar (Right) */
 .discovery-sidebar {
   width: 320px;
-  background: #141414;
+  background: #070707;
   border-left: none;
-  padding: 20px 16px 20px 0;
+  padding: 12px 12px 12px 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -84,6 +88,7 @@ body {
   margin-bottom: 24px;
   color: #ffffff;
   letter-spacing: 0.05em;
+  text-align: center;
 }
 
 /* Session Bars */
