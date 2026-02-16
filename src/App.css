@@ -2009,3 +2009,56 @@ body {
 .profile-menu-item.logout:hover {
   background: rgba(239, 68, 68, 0.1);
 }
+
+.faq-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.faq-question {
+  padding: 18px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  list-style: none;
+  user-select: none;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::after {
+  content: '▼';
+  transition: transform 0.3s;
+  color: #888;
+  font-size: 12px;
+}
+
+.faq-item[open] .faq-question::after {
+  transform: rotate(180deg);
+}
+
+.faq-question:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.faq-answer {
+  padding: 0 20px 20px 20px;
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.faq-answer p {
+  margin-bottom: 10px;
+}
