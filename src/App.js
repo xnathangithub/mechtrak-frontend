@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -36,9 +36,6 @@ function App() {
   const [tempName, setTempName] = useState('');
   const [startingSession, setStartingSession] = useState(false);
 
-  // Track manually unselected session IDs so polling doesn't reselect them
-  const manuallyUnselectedIds = useRef(new Set());
-
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -53,18 +50,18 @@ function App() {
   };
   
   const deleteSession = async (sessionId) => {
-    try {
-      await axios.delete(`${API_URL}/api/sessions/${sessionId}`);
-      await fetchSessions();
-      if (selectedSession?.session_id === sessionId) {
-        setSelectedSession(null);
-      }
-      showToast('Session deleted!');
-    } catch (error) {
-      console.error('Error deleting session:', error);
-      showToast('Failed to delete session', 'error');
+  try {
+    await axios.delete(`${API_URL}/api/sessions/${sessionId}`);
+    await fetchSessions();
+    if (selectedSession?.session_id === sessionId) {
+      setSelectedSession(null);
     }
-  };
+    showToast('Session deleted!');
+  } catch (error) {
+    console.error('Error deleting session:', error);
+    showToast('Failed to delete session', 'error');
+  }
+};
 
   const deletePlan = async (planId) => {
     try {
@@ -97,17 +94,21 @@ function App() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    // Only poll when on sessions or stats page
     if (currentView !== 'sessions' && currentView !== 'stats') return;
     
+    // Poll every 30 seconds
     const interval = setInterval(() => {
       fetchSessions();
     }, 30000);
     
+    // Also fetch immediately when switching to these views
     fetchSessions();
     
     return () => clearInterval(interval);
   }, [currentView]);
 
+  //auto update stats in session shot view 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (selectedSession) {
@@ -117,6 +118,7 @@ function App() {
       }
     }
   }, [sessions]);
+
 
   const checkAuth = async () => {
     const token = localStorage.getItem('token');
@@ -133,6 +135,7 @@ function App() {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setUser(response.data.user);
       
+      // Register token for plugin every time app loads
       await new Promise(resolve => setTimeout(resolve, 500));
       
       try {
@@ -193,7 +196,7 @@ function App() {
           headers: { Authorization: `Bearer ${token}` }
         });
       } catch (e) {
-        console.log('register-token failed:', e.response?.status, e.response?.data);
+          console.log('register-token failed:', e.response?.status, e.response?.data);
       }
       setUser(user);
       await fetchSessions();
@@ -201,8 +204,7 @@ function App() {
       setCurrentView('connecting');
       
     } catch (error) {
-      setAuthError(error.response?.data?.error || error.response?.data?.message || `Login failed (${error.response?.status})` || 'Login failed');
-    } finally {
+      setAuthError(error.response?.data?.error || error.response?.data?.message || `Login failed (${error.response?.status})` || 'Login failed');    } finally {
       setAuthLoading(false);
     }
   };
@@ -211,6 +213,7 @@ function App() {
     setAuthLoading(true);
     setAuthError('');
     
+    // Validation
     if (!authEmail.includes('@')) {
       setAuthError('Please enter a valid email');
       setAuthLoading(false);
@@ -263,27 +266,15 @@ function App() {
     setUser(null);
     setSessions([]);
     setPlans([]);
-    setCurrentView('home');
+    setCurrentView('home')
   };
-
+  //
   const fetchSessions = async () => {
     try {
       const response = await axios.get(`${API_URL}/api/sessions`, {
         headers: getAuthHeaders()
       });
-      const fetchedSessions = response.data.sessions || [];
-      setSessions(fetchedSessions);
-
-      // Only auto-select sessions that haven't been manually unselected
-      setSelectedSessionIds(prev => {
-        const existingSelected = prev.filter(id =>
-          fetchedSessions.some(s => s.id === id)
-        );
-        const newSessions = fetchedSessions
-          .map(s => s.id)
-          .filter(id => !prev.includes(id) && !manuallyUnselectedIds.current.has(id));
-        return [...existingSelected, ...newSessions];
-      });
+      setSessions(response.data.sessions);
     } catch (error) {
       console.error('Error fetching sessions:', error);
     }
@@ -300,24 +291,13 @@ function App() {
     }
   };
 
-  const toggleSessionSelection = (id) => {
-    setSelectedSessionIds(prev => {
-      if (prev.includes(id)) {
-        manuallyUnselectedIds.current.add(id);
-        return prev.filter(sid => sid !== id);
-      } else {
-        manuallyUnselectedIds.current.delete(id);
-        return [...prev, id];
-      }
-    });
-  };
-
   const renameSession = async (sessionId, newName) => {
     try {
       await axios.patch(`${API_URL}/api/sessions/${sessionId}/rename`, {
         name: newName
       });
       await fetchSessions();
+      // Update selectedSession with new name so it reflects immediately
       setSelectedSession(prev => ({ ...prev, name: newName }));
       showToast('Session renamed!');
     } catch (error) {
@@ -416,6 +396,7 @@ function App() {
   const filterSessionsByDate = () => {
     if (!statsDateRange.start || !statsDateRange.end) {
       setAvailableSessions(sessions);
+      setSelectedSessionIds(sessions.map(s => s.id));
       return;
     }
     
@@ -428,6 +409,7 @@ function App() {
     });
     
     setAvailableSessions(filtered);
+    setSelectedSessionIds(filtered.map(s => s.id));
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -443,15 +425,16 @@ function App() {
         
         if (response.data.connected) {
           setPluginConnected(true);
-          setTimeout(() => setCurrentView('home'), 2000);
+          setTimeout(() => setCurrentView('home'), 2000); // Wait 2 seconds then redirect
         }
       } catch (error) {
         console.error('Connection check failed:', error);
       }
     };
     
+    // Check every 3 seconds
     const interval = setInterval(checkConnection, 3000);
-    checkConnection();
+    checkConnection(); // Check immediately
     
     return () => clearInterval(interval);
   }, [currentView]);
@@ -474,7 +457,6 @@ function App() {
       }
     }
   }, [sessions]);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (sessions.length > 0 && statsDateRange.start && statsDateRange.end) {
@@ -507,12 +489,8 @@ function App() {
             accuracy: Math.round(accuracy),
             sessionIndex: sessionIndex,
             sessionId: session.id,
-            sessionName: session.name || `Session ${session.session_id.slice(-8)}`,
             date: dateStr,
-            shotNum: parseInt(shotNum),
-            shotType: shotData.shotType || 'Unknown',
-            goals: shotData.goals,
-            attempts: shotData.attempts
+            shotNum: parseInt(shotNum)
           });
         });
       });
@@ -525,8 +503,7 @@ function App() {
       return selectedSessions.map((session, index) => {
         const dataPoint = { 
           name: `Session ${index + 1}`,
-          date: new Date(session.start_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-          sessionName: session.name || `Session ${session.session_id.slice(-8)}`
+          date: new Date(session.start_time).toLocaleDateString()
         };
         
         Object.entries(session.shots_data).forEach(([shotNum, shotData]) => {
@@ -541,15 +518,12 @@ function App() {
     }
   };
 
-  // FIX 2: Recycle colors for 13+ sessions
   const generateColors = (count) => {
     const colors = [
       '#a855f7', '#00d4ff', '#10b981', '#f59e0b', '#ef4444',
-      '#8b5cf6', '#06b6d4', '#14b8a6', '#f97316', '#ec4899',
-      '#3b82f6', '#84cc16', '#f43f5e', '#0ea5e9', '#d946ef',
-      '#22c55e', '#fb923c', '#818cf8', '#2dd4bf', '#fbbf24'
+      '#8b5cf6', '#06b6d4', '#14b8a6', '#f97316', '#ec4899'
     ];
-    return Array.from({ length: count }, (_, i) => colors[i % colors.length]);
+    return colors.slice(0, count);
   };
 
   const calculateHighlights = () => {
@@ -611,52 +585,6 @@ function App() {
       }));
   };
 
-  // FIX 3: Overview tooltip with date, shot breakdown tooltip with date
-  const OverviewTooltip = ({ active, payload, colors }) => {
-    if (!active || !payload || !payload.length) return null;
-    const d = payload[0].payload;
-    return (
-      <div style={{
-        background: 'rgba(10, 10, 10, 0.97)',
-        border: `1px solid ${colors[d.sessionIndex] || '#ffffff'}`,
-        borderRadius: '10px',
-        padding: '12px 16px',
-        minWidth: '180px'
-      }}>
-        <p style={{ color: '#888', fontSize: '11px', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{d.date}</p>
-        <p style={{ color: '#ffffff', fontWeight: '600', margin: '0 0 4px 0' }}>{d.sessionName}</p>
-        <p style={{ color: '#aaa', fontSize: '13px', margin: '0 0 8px 0' }}>Shot {d.shotNum} — {d.shotType}</p>
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
-          <span style={{ color: colors[d.sessionIndex] || '#ffffff', fontWeight: '700', fontSize: '18px' }}>{d.accuracy}%</span>
-          <span style={{ color: '#666', fontSize: '13px', alignSelf: 'flex-end' }}>{d.goals}/{d.attempts}</span>
-        </div>
-      </div>
-    );
-  };
-
-  const BreakdownTooltip = ({ active, payload, label }) => {
-    if (!active || !payload || !payload.length) return null;
-    const d = payload[0]?.payload;
-    return (
-      <div style={{
-        background: 'rgba(10, 10, 10, 0.97)',
-        border: '1px solid rgba(255,255,255,0.2)',
-        borderRadius: '10px',
-        padding: '12px 16px',
-        minWidth: '180px'
-      }}>
-        <p style={{ color: '#888', fontSize: '11px', margin: '0 0 4px 0', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{d?.date}</p>
-        <p style={{ color: '#ffffff', fontWeight: '600', margin: '0 0 10px 0' }}>{d?.sessionName || label}</p>
-        {payload.map((entry, i) => (
-          <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', marginBottom: '4px' }}>
-            <span style={{ color: entry.color, fontSize: '13px' }}>{entry.name}</span>
-            <span style={{ color: '#ffffff', fontWeight: '600' }}>{entry.value}%</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   const renderChart = () => {
     const data = prepareChartData();
     const selectedSessions = sessions.filter(s => selectedSessionIds.includes(s.id));
@@ -670,7 +598,20 @@ function App() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="label" stroke="#888" angle={-45} textAnchor="end" height={80} />
             <YAxis stroke="#888" label={{ value: 'Accuracy %', angle: -90, position: 'insideLeft', fill: '#888' }} />
-            <Tooltip content={<OverviewTooltip colors={colors} />} />
+            <Tooltip 
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  const d = payload[0].payload;
+                  return (
+                    <div style={{ background: 'rgba(15,15,15,0.95)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px' }}>
+                      <p style={{ color: '#fff', margin: 0 }}>{d.fullLabel}</p>
+                      <p style={{ color: colors[d.sessionIndex], margin: '5px 0 0 0' }}>Accuracy: {d.accuracy}%</p>
+                    </div>
+                  );
+                }
+                return null;
+              }}
+            />
             <Line 
               type="monotone" 
               dataKey="accuracy"
@@ -678,11 +619,11 @@ function App() {
               strokeWidth={2}
               dot={(props) => {
                 const { cx, cy, payload } = props;
-                return <circle key={`dot-${payload.sessionIndex}-${payload.shotNum}`} cx={cx} cy={cy} r={5} fill={colors[payload.sessionIndex % colors.length]} stroke={colors[payload.sessionIndex % colors.length]} strokeWidth={2} />;
+                return <circle cx={cx} cy={cy} r={5} fill={colors[payload.sessionIndex]} stroke={colors[payload.sessionIndex]} strokeWidth={2} />;
               }}
               activeDot={(props) => {
                 const { cx, cy, payload } = props;
-                return <circle key={`active-${payload.sessionIndex}-${payload.shotNum}`} cx={cx} cy={cy} r={7} fill={colors[payload.sessionIndex % colors.length]} stroke="#fff" strokeWidth={2} />;
+                return <circle cx={cx} cy={cy} r={7} fill={colors[payload.sessionIndex]} stroke="#fff" strokeWidth={2} />;
               }}
             />
           </LineChart>
@@ -693,12 +634,25 @@ function App() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="label" stroke="#888" angle={-45} textAnchor="end" height={80} />
             <YAxis stroke="#888" label={{ value: 'Accuracy %', angle: -90, position: 'insideLeft', fill: '#888' }} />
-            <Tooltip content={<OverviewTooltip colors={colors} />} />
+            <Tooltip 
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  const d = payload[0].payload;
+                  return (
+                    <div style={{ background: 'rgba(15,15,15,0.95)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px' }}>
+                      <p style={{ color: '#fff', margin: 0 }}>{d.fullLabel}</p>
+                      <p style={{ color: colors[d.sessionIndex], margin: '5px 0 0 0' }}>Accuracy: {d.accuracy}%</p>
+                    </div>
+                  );
+                }
+                return null;
+              }}
+            />
             <Bar 
               dataKey="accuracy"
               shape={(props) => {
                 const { x, y, width, height, payload } = props;
-                return <rect key={`bar-${payload.sessionIndex}-${payload.shotNum}`} x={x} y={y} width={width} height={height} fill={colors[payload.sessionIndex % colors.length]} />;
+                return <rect x={x} y={y} width={width} height={height} fill={colors[payload.sessionIndex]} />;
               }}
             />
           </BarChart>
@@ -709,11 +663,24 @@ function App() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="label" stroke="#888" angle={-45} textAnchor="end" height={80} />
             <YAxis stroke="#888" label={{ value: 'Accuracy %', angle: -90, position: 'insideLeft', fill: '#888' }} />
-            <Tooltip content={<OverviewTooltip colors={colors} />} />
+            <Tooltip 
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  const d = payload[0].payload;
+                  return (
+                    <div style={{ background: 'rgba(15,15,15,0.95)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px' }}>
+                      <p style={{ color: '#fff', margin: 0 }}>{d.fullLabel}</p>
+                      <p style={{ color: colors[d.sessionIndex], margin: '5px 0 0 0' }}>Accuracy: {d.accuracy}%</p>
+                    </div>
+                  );
+                }
+                return null;
+              }}
+            />
             <defs>
               <linearGradient id="colorGradient" x1="0" y1="0" x2="1" y2="0">
                 {selectedSessions.map((_, index) => (
-                  <stop key={index} offset={`${(index / selectedSessions.length) * 100}%`} stopColor={colors[index % colors.length]} stopOpacity={0.8} />
+                  <stop key={index} offset={`${(index / selectedSessions.length) * 100}%`} stopColor={colors[index]} stopOpacity={0.8} />
                 ))}
               </linearGradient>
             </defs>
@@ -738,10 +705,10 @@ function App() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="name" stroke="#888" />
             <YAxis stroke="#888" label={{ value: 'Accuracy %', angle: -90, position: 'insideLeft', fill: '#888' }} />
-            <Tooltip content={<BreakdownTooltip />} />
+            <Tooltip contentStyle={{ background: 'rgba(15,15,15,0.95)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }} />
             <Legend />
             {sortedShotNumbers.map((shotNum, index) => (
-              <Line key={shotNum} type="monotone" dataKey={`Shot ${shotNum}`} stroke={colors[index % colors.length]} strokeWidth={2} />
+              <Line key={shotNum} type="monotone" dataKey={`Shot ${shotNum}`} stroke={colors[index]} strokeWidth={2} />
             ))}
           </LineChart>
         );
@@ -751,10 +718,10 @@ function App() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="name" stroke="#888" />
             <YAxis stroke="#888" label={{ value: 'Accuracy %', angle: -90, position: 'insideLeft', fill: '#888' }} />
-            <Tooltip content={<BreakdownTooltip />} />
+            <Tooltip contentStyle={{ background: 'rgba(15,15,15,0.95)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }} />
             <Legend />
             {sortedShotNumbers.map((shotNum, index) => (
-              <Bar key={shotNum} dataKey={`Shot ${shotNum}`} fill={colors[index % colors.length]} />
+              <Bar key={shotNum} dataKey={`Shot ${shotNum}`} fill={colors[index]} />
             ))}
           </BarChart>
         );
@@ -764,10 +731,10 @@ function App() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis dataKey="name" stroke="#888" />
             <YAxis stroke="#888" label={{ value: 'Accuracy %', angle: -90, position: 'insideLeft', fill: '#888' }} />
-            <Tooltip content={<BreakdownTooltip />} />
+            <Tooltip contentStyle={{ background: 'rgba(15,15,15,0.95)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px' }} />
             <Legend />
             {sortedShotNumbers.map((shotNum, index) => (
-              <Area key={shotNum} type="monotone" dataKey={`Shot ${shotNum}`} stroke={colors[index % colors.length]} fill={colors[index % colors.length]} fillOpacity={0.3} />
+              <Area key={shotNum} type="monotone" dataKey={`Shot ${shotNum}`} stroke={colors[index]} fill={colors[index]} fillOpacity={0.3} />
             ))}
           </AreaChart>
         );
@@ -957,12 +924,12 @@ function App() {
               <div className="home-cards-grid">
                 <div className="glass-card" onClick={() => setCurrentView('sessions')}>
                   <div className="card-icon">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-                      <rect x="3" y="3" width="7" height="7" rx="1"/>
-                      <rect x="14" y="3" width="7" height="7" rx="1"/>
-                      <rect x="3" y="14" width="7" height="7" rx="1"/>
-                      <rect x="14" y="14" width="7" height="7" rx="1"/>
-                    </svg>
+                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                  </svg>
                   </div>
                   <h2>Sessions</h2>
                   <p>View and manage your training sessions</p>
@@ -1021,58 +988,59 @@ function App() {
                   ) : (
                     <div>
                       <p style={{ color: '#888', marginBottom: '20px' }}>Select a session from the sidebar →</p>
-                      {sessions.some(s => s.status === 'active') ? (
-                        <div style={{
-                          background: 'rgba(16, 185, 129, 0.1)',
-                          border: '1px solid rgba(16, 185, 129, 0.3)',
-                          borderRadius: '12px',
-                          padding: '16px 20px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '12px',
-                          maxWidth: '500px'
-                        }}>
-                          <div style={{ 
-                            width: '10px', height: '10px', 
-                            borderRadius: '50%', 
-                            background: '#10b981',
-                            boxShadow: '0 0 8px #10b981',
-                            animation: 'pulse 2s infinite'
-                          }}></div>
-                          <div>
-                            <p style={{ color: '#10b981', fontWeight: '600', marginBottom: '2px' }}>
-                              Session Active
-                            </p>
-                            <p style={{ color: '#888', fontSize: '13px' }}>
-                              {sessions.find(s => s.status === 'active')?.name || 'Training in progress'} — Plugin is recording
-                            </p>
+                      {/* Show active session banner if one exists */}
+                        {sessions.some(s => s.status === 'active') ? (
+                          <div style={{
+                            background: 'rgba(16, 185, 129, 0.1)',
+                            border: '1px solid rgba(16, 185, 129, 0.3)',
+                            borderRadius: '12px',
+                            padding: '16px 20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            maxWidth: '500px'
+                          }}>
+                            <div style={{ 
+                              width: '10px', height: '10px', 
+                              borderRadius: '50%', 
+                              background: '#10b981',
+                              boxShadow: '0 0 8px #10b981',
+                              animation: 'pulse 2s infinite'
+                            }}></div>
+                            <div>
+                              <p style={{ color: '#10b981', fontWeight: '600', marginBottom: '2px' }}>
+                                Session Active
+                              </p>
+                              <p style={{ color: '#888', fontSize: '13px' }}>
+                                {sessions.find(s => s.status === 'active')?.name || 'Training in progress'} — Plugin is recording
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ) : (
-                        <div style={{
-                          background: 'rgba(239, 68, 68, 0.1)',
-                          border: '1px solid rgba(239, 68, 68, 0.3)',
-                          borderRadius: '12px',
-                          padding: '16px 20px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '12px',
-                          maxWidth: '500px'
-                        }}>
-                          <div style={{ fontSize: '20px' }}>⚠️</div>
-                          <div>
-                            <p style={{ color: '#ef4444', fontWeight: '600', marginBottom: '2px' }}>
-                              No Active Session
-                            </p>
-                            <p style={{ color: '#888', fontSize: '13px' }}>
-                              Start a session from the homepage to begin tracking
-                            </p>
+                        ) : (
+                          <div style={{
+                            background: 'rgba(239, 68, 68, 0.1)',
+                            border: '1px solid rgba(239, 68, 68, 0.3)',
+                            borderRadius: '12px',
+                            padding: '16px 20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            maxWidth: '500px'
+                          }}>
+                            <div style={{ fontSize: '20px' }}>⚠️</div>
+                            <div>
+                              <p style={{ color: '#ef4444', fontWeight: '600', marginBottom: '2px' }}>
+                                No Active Session
+                              </p>
+                              <p style={{ color: '#888', fontSize: '13px' }}>
+                                Start a session from the homepage to begin tracking
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
               ) : selectedShot ? (
                 <div>
                   <button className="back-button" onClick={() => setSelectedShot(null)} style={{ marginTop: '20px' }}>
@@ -1152,7 +1120,7 @@ function App() {
                         <h1 style={{ fontSize: '36px' }}>
                           {selectedSession.name || `Session ${selectedSession.session_id.slice(-8)}`}
                         </h1>
-                        <button className="rename-btn" onClick={() => { setEditingName(true); setTempName(selectedSession.name || ''); }}>
+                        <button className="rename-btn" onClick={() => setEditingName(true)}>
                           ✏️ Rename
                         </button>
                       </div>
@@ -1167,50 +1135,50 @@ function App() {
                     </div>
                   </div>
                   <h2 style={{ marginBottom: '20px', color: '#ffffff' }}>Shots</h2>
-                  <div className="shot-cards-container">
-                    {Object.entries(selectedSession.shots_data || {}).map(([shotNum, shot]) => {
-                      const accuracy = shot.attempts > 0 
-                        ? (shot.goals / shot.attempts) * 100 
-                        : -1;
-                      
-                      const accuracyClass = accuracy === -1 
-                        ? 'accuracy-none'
-                        : accuracy >= 50 
-                        ? 'accuracy-high' 
-                        : accuracy >= 25 
-                        ? 'accuracy-medium' 
-                        : 'accuracy-low';
+              <div className="shot-cards-container">
+                {Object.entries(selectedSession.shots_data || {}).map(([shotNum, shot]) => {
+                  const accuracy = shot.attempts > 0 
+                    ? (shot.goals / shot.attempts) * 100 
+                    : -1;
+                  
+                  const accuracyClass = accuracy === -1 
+                    ? 'accuracy-none'
+                    : accuracy >= 50 
+                    ? 'accuracy-high' 
+                    : accuracy >= 25 
+                    ? 'accuracy-medium' 
+                    : 'accuracy-low';
 
-                      const barColor = accuracy === -1
-                        ? 'rgba(255, 255, 255, 0.3)'
-                        : accuracy >= 50
-                        ? 'rgba(16, 185, 129, 0.6)'
-                        : accuracy >= 25
-                        ? 'rgba(245, 158, 11, 0.6)'
-                        : 'rgba(239, 68, 68, 0.6)';
+                  const barColor = accuracy === -1
+                    ? 'rgba(255, 255, 255, 0.3)'
+                    : accuracy >= 50
+                    ? 'rgba(16, 185, 129, 0.6)'
+                    : accuracy >= 25
+                    ? 'rgba(245, 158, 11, 0.6)'
+                    : 'rgba(239, 68, 68, 0.6)';
 
-                      return (
-                        <div 
-                          key={shotNum} 
-                          className={`shot-card ${accuracyClass}`}
-                          onClick={() => setSelectedShot({ shotNum, ...shot })}
-                        >
-                          <div className="shot-number">Shot {shotNum}</div>
-                          <div className="shot-type">{shot.shotType || 'Unknown'}</div>
-                          <div className="vertical-bar-container">
-                            <div className="vertical-bar-background">
-                              <div className="vertical-bar-fill" style={{ 
-                                height: `${accuracy === -1 ? 0 : accuracy}%`, 
-                                background: barColor
-                              }} />
-                            </div>
-                            <div className="bar-label">{shot.goals}/{shot.attempts}</div>
-                          </div>
-                          <div className="shot-stats">{accuracy === -1 ? '0%' : `${Math.round(accuracy)}%`}</div>
+                  return (
+                    <div 
+                      key={shotNum} 
+                      className={`shot-card ${accuracyClass}`}
+                      onClick={() => setSelectedShot({ shotNum, ...shot })}
+                    >
+                      <div className="shot-number">Shot {shotNum}</div>
+                      <div className="shot-type">{shot.shotType || 'Unknown'}</div>
+                      <div className="vertical-bar-container">
+                        <div className="vertical-bar-background">
+                          <div className="vertical-bar-fill" style={{ 
+                            height: `${accuracy === -1 ? 0 : accuracy}%`, 
+                            background: barColor
+                          }} />
                         </div>
-                      );
-                    })}
-                  </div>
+                        <div className="bar-label">{shot.goals}/{shot.attempts}</div>
+                      </div>
+                      <div className="shot-stats">{accuracy === -1 ? '0%' : `${Math.round(accuracy)}%`}</div>
+                    </div>
+                  );
+                })}
+              </div>
                 </div>
               )}
             </div>
@@ -1305,9 +1273,8 @@ function App() {
                     <div className="stats-control-panel">
                       <h4>Chart Mode</h4>
                       <div className="chart-type-buttons">
-                        <button className={`chart-type-btn ${statsChartMode === 'overview' ? 'active' : ''}`} onClick={() => setStatsChartMode('overview')}>Session Overview</button>
-                        <button className={`chart-type-btn ${statsChartMode === 'breakdown' ? 'active' : ''}`} onClick={() => setStatsChartMode('breakdown')}>Shot Breakdown</button>
-                      </div>
+                       <button className={`chart-type-btn ${statsChartMode === 'overview' ? 'active' : ''}`} onClick={() => setStatsChartMode('overview')}>Shot Breakdown</button>
+                       <button className={`chart-type-btn ${statsChartMode === 'breakdown' ? 'active' : ''}`} onClick={() => setStatsChartMode('breakdown')}>Session Overview</button></div>
                     </div>
                     <div className="stats-control-panel">
                       <h4>Chart Type</h4>
@@ -1466,6 +1433,7 @@ function App() {
                     );
                   })}
 
+                  {/* Custom Plans Card */}
                   <div className="plan-card create-card" onClick={() => setShowCreatePlan(true)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ fontSize: '40px', marginBottom: '15px' }}>+</div>
                     <h3>Custom Plan</h3>
@@ -1475,6 +1443,7 @@ function App() {
               </>
             ) : (
               <div className="create-plan-form" style={{ padding: '0 30px 30px' }}>
+                
               </div>
             )}
           </div>
@@ -1532,14 +1501,8 @@ function App() {
               ) : (
                 <>
                   <div style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
-                    <button className="glossy-btn" style={{ fontSize: '12px', padding: '8px 12px' }} onClick={() => {
-                      manuallyUnselectedIds.current.clear();
-                      setSelectedSessionIds(availableSessions.map(s => s.id));
-                    }}>Select All</button>
-                    <button className="glossy-btn" style={{ fontSize: '12px', padding: '8px 12px' }} onClick={() => {
-                      availableSessions.forEach(s => manuallyUnselectedIds.current.add(s.id));
-                      setSelectedSessionIds([]);
-                    }}>Deselect All</button>
+                    <button className="glossy-btn" style={{ fontSize: '12px', padding: '8px 12px' }} onClick={() => setSelectedSessionIds(availableSessions.map(s => s.id))}>Select All</button>
+                    <button className="glossy-btn" style={{ fontSize: '12px', padding: '8px 12px' }} onClick={() => setSelectedSessionIds([])}>Deselect All</button>
                   </div>
                   <div className="session-checkbox-list">
                     {availableSessions.map((session) => (
@@ -1547,9 +1510,15 @@ function App() {
                         <input 
                           type="checkbox"
                           checked={selectedSessionIds.includes(session.id)}
-                          onChange={() => toggleSessionSelection(session.id)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedSessionIds([...selectedSessionIds, session.id]);
+                            } else {
+                              setSelectedSessionIds(selectedSessionIds.filter(id => id !== session.id));
+                            }
+                          }}
                         />
-                        <div className="session-checkbox-info">
+                          <div className="session-checkbox-info">
                           <div className="session-checkbox-name">
                             {session.name || `Session ${session.session_id.slice(-8)}`}
                           </div>
@@ -1565,7 +1534,6 @@ function App() {
           </div>
         </div>
       )}
-
       <div className="toast-container">
         {toasts.map(toast => (
           <div key={toast.id} className={`toast ${toast.type}`}>
