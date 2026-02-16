@@ -1120,21 +1120,7 @@ function App() {
                         <h1 style={{ fontSize: '36px' }}>
                           {selectedSession.name || `Session ${selectedSession.session_id.slice(-8)}`}
                         </h1>
-                        <button
-                          onClick={() => {
-                            setTempName(selectedSession.name || `Session ${selectedSession.session_id.slice(-8)}`);
-                            setEditingName(true);
-                          }}
-                          style={{
-                            background: 'rgba(255,255,255,0.05)',
-                            border: '1px solid rgba(255,255,255,0.1)',
-                            color: '#888',
-                            padding: '6px 12px',
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            fontSize: '13px'
-                          }}
-                        >
+                        <button className="rename-btn" onClick={() => setEditingName(true)}>
                           ✏️ Rename
                         </button>
                       </div>
@@ -1143,31 +1129,32 @@ function App() {
                       <span>Duration: {selectedSession.duration_minutes || 0} min</span>
                       <span>Total: {selectedSession.total_goals}/{selectedSession.total_attempts}</span>
                       <span>Accuracy: {Math.round(selectedSession.total_accuracy || 0)}%</span>
-                      <button 
-                        onClick={() => deleteSession(selectedSession.session_id)}
-                        style={{
-                          background: 'rgba(239, 68, 68, 0.1)',
-                          border: '1px solid rgba(239, 68, 68, 0.3)',
-                          color: '#ef4444',
-                          padding: '6px 14px',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          fontSize: '13px',
-                          marginLeft: 'auto'
-                        }}
-                      >
+                      <button className="delete-btn" onClick={() => deleteSession(selectedSession.session_id)}>
                         🗑️ Delete Session
                       </button>
                     </div>
                   </div>
                   <h2 style={{ marginBottom: '20px', color: '#ffffff' }}>Shots</h2>
                   <div className="shot-cards-container">
-                    {Object.entries(selectedSession.shots_data).map(([shotNum, shotData]) => {
-                      const accuracy = shotData.attempts > 0 
-                        ? (shotData.goals / shotData.attempts) * 100 
-                        : 0;
+                    {Object.entries(selectedSession.shots_data || {}).map(([shotNum, shot]) => {
+                      const accuracy = shot.attempts > 0 
+                        ? (shot.goals / shot.attempts) * 100 
+                        : -1;
+                      
+                      const accuracyClass = accuracy === -1 
+                        ? 'accuracy-none'
+                        : accuracy >= 50 
+                        ? 'accuracy-high' 
+                        : accuracy >= 25 
+                        ? 'accuracy-medium' 
+                        : 'accuracy-low';
+
                       return (
-                        <div key={shotNum} className="shot-card" onClick={() => setSelectedShot({ shotNum, ...shotData })}>
+                        <div 
+                          key={shotNum} 
+                          className={`shot-card ${accuracyClass}`}
+                          onClick={() => setSelectedShot({ shotNum, ...shot })}
+                        >
                           <div className="shot-number">Shot {shotNum}</div>
                           <div className="shot-type">{shotData.shotType || 'Unknown'}</div>
                           <div className="vertical-bar-container">
@@ -1364,7 +1351,7 @@ function App() {
           )}
         </div>
 
-        {currentView !== 'home' && currentView !== 'connecting' && (
+        {currentView !== 'plans' && currentView !== 'stats' && currentView !== 'home' && currentView !== 'connecting' && (
           <div className="discovery-sidebar">
             <h2 className="discovery-title">Discovery</h2>
             {sessions.length === 0 ? (
