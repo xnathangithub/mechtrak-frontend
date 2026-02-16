@@ -1141,6 +1141,14 @@ function App() {
                     ? (shot.goals / shot.attempts) * 100 
                     : -1;
                   
+                  const accuracyClass = accuracy === -1 
+                    ? 'accuracy-none'
+                    : accuracy >= 50 
+                    ? 'accuracy-high' 
+                    : accuracy >= 25 
+                    ? 'accuracy-medium' 
+                    : 'accuracy-low';
+
                   const barColor = accuracy === -1
                     ? 'rgba(255, 255, 255, 0.3)'
                     : accuracy >= 50
