@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './App.css';
 import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -36,7 +36,7 @@ function App() {
   const [tempName, setTempName] = useState('');
   const [startingSession, setStartingSession] = useState(false);
   const [statsPlanFilter, setStatsPlanFilter] = useState('all');
-
+  const manuallyUnselectedIds = useRef(new Set());
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token');
