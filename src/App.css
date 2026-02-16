@@ -1308,12 +1308,15 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
-  padding: 10px;
+  padding: 12px 16px;
   color: #888;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s;
+  width: 100%;
+  text-align: left;
+  display: block;
 }
 
 .chart-type-btn:hover {
@@ -1324,8 +1327,9 @@ body {
 
 .chart-type-btn.active {
   background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
   color: #ffffff;
+  font-weight: 600;
 }
 
 .color-picker-group {
