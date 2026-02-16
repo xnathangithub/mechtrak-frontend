@@ -38,7 +38,8 @@ function App() {
   const [statsPlanFilter, setStatsPlanFilter] = useState('all');
   const manuallyUnselectedIds = useRef(new Set());
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  
+  const [showFAQ, setShowFAQ] = useState(false);
+
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -879,8 +880,7 @@ function App() {
               <div className="profile-menu">
                 <button className="profile-menu-item" onClick={() => {
                   setShowProfileMenu(false);
-                  // TODO: Open FAQ modal
-                  alert('FAQ coming soon!');
+                  setShowFAQ(true);
                 }}>
                   ❓ FAQ
                 </button>
@@ -1588,6 +1588,31 @@ function App() {
           </div>
         ))}
       </div>
+      {showFAQ && (
+        <div className="modal-overlay" onClick={() => setShowFAQ(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '600px' }}>
+            <div className="modal-header">
+              <h2>FAQ</h2>
+              <button className="close-btn" onClick={() => setShowFAQ(false)}>✕</button>
+            </div>
+            
+            <div style={{ padding: '30px' }}>
+              <details className="faq-item">
+                <summary className="faq-question">How do I change the HUD?</summary>
+                <div className="faq-answer">
+                  <p>To customize your in-game HUD:</p>
+                  <ol style={{ marginLeft: '20px', marginTop: '10px', color: '#aaa', lineHeight: '1.8' }}>
+                    <li>Press <strong style={{ color: '#fff' }}>F2</strong> to open BakkesMod</li>
+                    <li>Navigate to <strong style={{ color: '#fff' }}>Plugins</strong></li>
+                    <li>Find <strong style={{ color: '#fff' }}>MechTrak</strong> in the list</li>
+                    <li>Toggle <strong style={{ color: '#fff' }}>Hide HUD</strong> or <strong style={{ color: '#fff' }}>Compact HUD</strong> options</li>
+                  </ol>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
