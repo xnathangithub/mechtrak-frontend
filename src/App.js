@@ -35,6 +35,8 @@ function App() {
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState('');
   const [startingSession, setStartingSession] = useState(false);
+  const [statsPlanFilter, setStatsPlanFilter] = useState('all');
+
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token');
@@ -465,8 +467,10 @@ function App() {
   }, [statsDateRange]);
 
   const prepareChartData = () => {
-    const selectedSessions = sessions.filter(s => selectedSessionIds.includes(s.id));
-    
+    const selectedSessions = sessions.filter(s => 
+      selectedSessionIds.includes(s.id) &&
+      (statsPlanFilter === 'all' || s.plan_id === parseInt(statsPlanFilter))
+    );    
     if (statsChartMode === 'overview') {
       selectedSessions.sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
       
@@ -527,8 +531,10 @@ function App() {
   };
 
   const calculateHighlights = () => {
-    const selectedSessions = sessions.filter(s => selectedSessionIds.includes(s.id));
-    
+    const selectedSessions = sessions.filter(s => 
+      selectedSessionIds.includes(s.id) &&
+      (statsPlanFilter === 'all' || s.plan_id === parseInt(statsPlanFilter))
+    );    
     if (selectedSessions.length === 0) {
       return { totalAttempts: 0, totalGoals: 0, bestAccuracy: 0, bestAccuracyDate: null };
     }
@@ -560,19 +566,6 @@ function App() {
     };
   };
 
-  const getTop5Sessions = () => {
-    const selectedSessions = sessions.filter(s => selectedSessionIds.includes(s.id));
-    
-    return selectedSessions
-      .map(session => ({
-        ...session,
-        accuracy: session.total_attempts > 0 
-          ? (session.total_goals / session.total_attempts) * 100 
-          : 0
-      }))
-      .sort((a, b) => b.accuracy - a.accuracy)
-      .slice(0, 5);
-  };
 
   const prepareMiniGraphData = (session) => {
     return Object.entries(session.shots_data)
@@ -1254,6 +1247,22 @@ function App() {
               </button>
               <div className="stats-container">
                 <div className="stats-top-controls">
+
+                  <div className="stats-control-box">
+                    <label>Filter by Plan</label>
+                    <select 
+                      value={statsPlanFilter} 
+                      onChange={(e) => setStatsPlanFilter(e.target.value)}
+                      className="date-input"
+                      style={{ width: '100%' }}
+                    >
+                      <option value="all">All Plans</option>
+                      {plans.map(plan => (
+                        <option key={plan.id} value={plan.id}>{plan.name}</option>
+                      ))}
+                    </select>
+                  </div>
+
                   <div className="stats-control-box">
                     <label>Viewing Sessions</label>
                     <div className="date-range-inputs">
@@ -1262,10 +1271,12 @@ function App() {
                       <input type="date" value={statsDateRange.end} onChange={(e) => setStatsDateRange({...statsDateRange, end: e.target.value})} className="date-input" />
                     </div>
                   </div>
+
                   <div className="stats-control-box" onClick={() => setShowSessionSelector(true)} style={{ cursor: 'pointer' }}>
                     <label>Total Sessions (click to select sessions)</label>
                     <div className="session-count-display">{selectedSessionIds.length} selected</div>
                   </div>
+
                 </div>
                 
                 <div className="stats-main-grid">
@@ -1326,35 +1337,6 @@ function App() {
                       })()}
                     </div>
                   </div>
-                </div>
-                
-                <div className="stats-top-sessions">
-                  <details className="top-sessions-dropdown">
-                    <summary>Top 5 Sessions</summary>
-                    <div className="top-sessions-grid">
-                      {getTop5Sessions().map((session, index) => {
-                        const miniData = prepareMiniGraphData(session);
-                        return (
-                          <div key={session.id} className="top-session-card">
-                            <div className="top-session-rank">#{index + 1}</div>
-                            <ResponsiveContainer width="100%" height={80}>
-                              <LineChart data={miniData}>
-                                <Line type="monotone" dataKey="accuracy" stroke="#a855f7" strokeWidth={2} dot={false} />
-                              </LineChart>
-                            </ResponsiveContainer>
-                            <div className="session-mini-stats">
-                              <span>{new Date(session.start_time).toLocaleDateString()}</span>
-                              <span>{session.total_goals}/{session.total_attempts}</span>
-                              <span className="mini-accuracy">{Math.round(session.accuracy)}%</span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                      {getTop5Sessions().length === 0 && (
-                        <p style={{ color: '#888', padding: '20px', gridColumn: '1 / -1', textAlign: 'center' }}>No sessions selected</p>
-                      )}
-                    </div>
-                  </details>
                 </div>
               </div>
             </div>
