@@ -847,7 +847,14 @@ function App() {
 
   return (
     <div className="App">
-      <header className={`header ${currentView === 'sessions' ? 'no-border' : ''}`}>        <div className="logo">MECH TRAK</div>
+      <header className={`header ${currentView === 'sessions' ? 'no-border' : ''}`}>        
+        <div className="logo" onClick={() => {
+          setCurrentView('home');
+          setSelectedSession(null);
+          setSelectedShot(null);
+          }} style={{ cursor: 'pointer' }}>
+          MECH TRAK
+          </div>
         <div className="header-actions">
           {user && currentView !== 'sessions' && (
             <button className="glossy-btn" onClick={logout} style={{ fontSize: '13px' }}>
@@ -972,13 +979,6 @@ function App() {
           
           {currentView === 'sessions' && (
             <div>
-              <button className="back-button" onClick={() => {
-                setCurrentView('home');
-                setSelectedSession(null);
-                setSelectedShot(null);
-              }}>
-                ← Back to Home
-              </button>
               
               {!selectedSession ? (
                 <div style={{ marginTop: '30px' }}>
@@ -1197,9 +1197,6 @@ function App() {
           
           {currentView === 'plans' && (
             <div>
-              <button className="back-button" onClick={() => setCurrentView('home')}>
-                ← Back to Home
-              </button>
               <div style={{ marginTop: '30px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
                   <div>
@@ -1260,9 +1257,6 @@ function App() {
           
           {currentView === 'stats' && (
             <div>
-              <button className="back-button" onClick={() => setCurrentView('home')}>
-                ← Back to Home
-              </button>
               <div className="stats-container">
                 <div className="stats-top-controls">
 
