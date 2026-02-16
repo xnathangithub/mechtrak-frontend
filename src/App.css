@@ -66,7 +66,7 @@ body {
 /* Discovery Sidebar (Right) */
 .discovery-sidebar {
   width: 320px;
-  background: #070707;
+  background: transparent;
   border-left: none;
   padding: 12px 12px 12px 0;
   overflow: hidden;
@@ -79,7 +79,10 @@ body {
 }
 
 .discovery-inner {
-  background: #1c1c1c;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 24px 20px;
   flex: 1;
@@ -88,6 +91,10 @@ body {
   margin-top: 12px;
   margin-bottom: 12px;
   overflow: hidden;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.3),
+    0 10px 15px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .discovery-sessions-list {
