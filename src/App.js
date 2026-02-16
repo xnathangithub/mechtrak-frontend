@@ -522,13 +522,14 @@ function App() {
     }
   };
 
-  const generateColors = (count) => {
-    const colors = [
-      '#a855f7', '#00d4ff', '#10b981', '#f59e0b', '#ef4444',
-      '#8b5cf6', '#06b6d4', '#14b8a6', '#f97316', '#ec4899'
-    ];
-    return colors.slice(0, count);
-  };
+  const generateColors = () => {
+  return [
+    '#a855f7', '#00d4ff', '#10b981', '#f59e0b', '#ef4444',
+    '#8b5cf6', '#06b6d4', '#14b8a6', '#f97316', '#ec4899',
+    '#3b82f6', '#84cc16', '#f43f5e', '#0ea5e9', '#d946ef',
+    '#22c55e', '#fb923c', '#818cf8', '#2dd4bf', '#fbbf24'
+  ];
+};
 
   const calculateHighlights = () => {
     const selectedSessions = sessions.filter(s => 
@@ -612,11 +613,15 @@ function App() {
               strokeWidth={2}
               dot={(props) => {
                 const { cx, cy, payload } = props;
-                return <circle cx={cx} cy={cy} r={5} fill={colors[payload.sessionIndex]} stroke={colors[payload.sessionIndex]} strokeWidth={2} />;
+                const colors = generateColors(sessions.filter(s => selectedSessionIds.includes(s.id)).length);
+                const colorIndex = payload.sessionIndex % colors.length;
+                return <circle key={`dot-${payload.sessionIndex}-${payload.shotNum}`} cx={cx} cy={cy} r={5} fill={colors[colorIndex]} stroke={colors[colorIndex]} strokeWidth={2} />;
               }}
               activeDot={(props) => {
                 const { cx, cy, payload } = props;
-                return <circle cx={cx} cy={cy} r={7} fill={colors[payload.sessionIndex]} stroke="#fff" strokeWidth={2} />;
+                const colors = generateColors(sessions.filter(s => selectedSessionIds.includes(s.id)).length);
+                const colorIndex = payload.sessionIndex % colors.length;
+                return <circle key={`active-${payload.sessionIndex}-${payload.shotNum}`} cx={cx} cy={cy} r={7} fill={colors[colorIndex]} stroke="#fff" strokeWidth={2} />;
               }}
             />
           </LineChart>
@@ -1252,13 +1257,34 @@ function App() {
                     <label>Filter by Plan</label>
                     <select 
                       value={statsPlanFilter} 
-                      onChange={(e) => setStatsPlanFilter(e.target.value)}
-                      className="date-input"
-                      style={{ width: '100%' }}
+                      onChange={(e) => {
+                        const planId = e.target.value;
+                        setStatsPlanFilter(planId);
+                        // Also filter selected session IDs
+                        if (planId === 'all') {
+                          manuallyUnselectedIds.current.clear();
+                          setSelectedSessionIds(sessions.map(s => s.id));
+                        } else {
+                          const filtered = sessions.filter(s => s.plan_id === parseInt(planId));
+                          const unfiltered = sessions.filter(s => s.plan_id !== parseInt(planId));
+                          unfiltered.forEach(s => manuallyUnselectedIds.current.add(s.id));
+                          setSelectedSessionIds(filtered.map(s => s.id));
+                        }
+                      }}
+                      style={{ 
+                        width: '100%',
+                        background: '#1a1a1a',
+                        color: '#ffffff',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        borderRadius: '8px',
+                        padding: '10px 12px',
+                        fontSize: '14px',
+                        cursor: 'pointer'
+                      }}
                     >
-                      <option value="all">All Plans</option>
+                      <option value="all" style={{ background: '#1a1a1a', color: '#ffffff' }}>All Plans</option>
                       {plans.map(plan => (
-                        <option key={plan.id} value={plan.id}>{plan.name}</option>
+                        <option key={plan.id} value={plan.id} style={{ background: '#1a1a1a', color: '#ffffff' }}>{plan.name}</option>
                       ))}
                     </select>
                   </div>
@@ -1284,8 +1310,8 @@ function App() {
                     <div className="stats-control-panel">
                       <h4>Chart Mode</h4>
                       <div className="chart-type-buttons">
-                       <button className={`chart-type-btn ${statsChartMode === 'overview' ? 'active' : ''}`} onClick={() => setStatsChartMode('overview')}>Shot Breakdown</button>
                        <button className={`chart-type-btn ${statsChartMode === 'breakdown' ? 'active' : ''}`} onClick={() => setStatsChartMode('breakdown')}>Session Overview</button></div>
+                       <button className={`chart-type-btn ${statsChartMode === 'overview' ? 'active' : ''}`} onClick={() => setStatsChartMode('overview')}>Shot Breakdown</button>
                     </div>
                     <div className="stats-control-panel">
                       <h4>Chart Type</h4>
