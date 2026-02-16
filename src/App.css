@@ -60,6 +60,7 @@ body {
   overflow-y: auto;
   position: relative;
   background: #070707;
+  margin-right: 320px;
 }
 
 /* Discovery Sidebar (Right) */
@@ -71,6 +72,10 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
 }
 
 .discovery-inner {
@@ -80,6 +85,7 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin-top: 12px;
 }
 
 .discovery-title {
