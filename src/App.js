@@ -37,7 +37,8 @@ function App() {
   const [startingSession, setStartingSession] = useState(false);
   const [statsPlanFilter, setStatsPlanFilter] = useState('all');
   const manuallyUnselectedIds = useRef(new Set());
-
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  
   const getAuthHeaders = () => {
     const token = localStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -862,7 +863,37 @@ function App() {
             </button>
           )}
         </div>
-        {currentView !== 'sessions' && <div className="profile-placeholder"></div>}
+        {currentView !== 'sessions' && <div className="profile-placeholder">
+          <div style={{ position: 'relative' }}>
+            <div 
+              className="profile-icon" 
+              onClick={() => setShowProfileMenu(!showProfileMenu)}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            
+            {showProfileMenu && (
+              <div className="profile-menu">
+                <button className="profile-menu-item" onClick={() => {
+                  setShowProfileMenu(false);
+                  // TODO: Open FAQ modal
+                  alert('FAQ coming soon!');
+                }}>
+                  ❓ FAQ
+                </button>
+                <button className="profile-menu-item logout" onClick={() => {
+                  setShowProfileMenu(false);
+                  logout();
+                }}>
+                  🚪 Logout
+                </button>
+              </div>
+            )}
+          </div>
+          </div>}
         {currentView === 'sessions' && <div></div>}
       </header>
 
