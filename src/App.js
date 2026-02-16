@@ -1141,13 +1141,13 @@ function App() {
                     ? (shot.goals / shot.attempts) * 100 
                     : -1;
                   
-                  const accuracyClass = accuracy === -1 
-                    ? 'accuracy-none'
-                    : accuracy >= 50 
-                    ? 'accuracy-high' 
-                    : accuracy >= 25 
-                    ? 'accuracy-medium' 
-                    : 'accuracy-low';
+                  const barColor = accuracy === -1
+                    ? 'rgba(255, 255, 255, 0.3)'
+                    : accuracy >= 50
+                    ? 'rgba(16, 185, 129, 0.6)'
+                    : accuracy >= 25
+                    ? 'rgba(245, 158, 11, 0.6)'
+                    : 'rgba(239, 68, 68, 0.6)';
 
                   return (
                     <div 
@@ -1161,7 +1161,7 @@ function App() {
                         <div className="vertical-bar-background">
                           <div className="vertical-bar-fill" style={{ 
                             height: `${accuracy === -1 ? 0 : accuracy}%`, 
-                            background: '#ffffff' 
+                            background: barColor
                           }} />
                         </div>
                         <div className="bar-label">{shot.goals}/{shot.attempts}</div>
