@@ -1377,8 +1377,7 @@ function App() {
                 {sessions.length === 0 ? (
                   <p style={{ color: '#888' }}>No sessions yet. Start training!</p>
                 ) : (
-                  sessions.map((session) => {
-                   {[...sessions]
+                  [...sessions]
                     .sort((a, b) => new Date(b.start_time) - new Date(a.start_time))
                     .map((session) => {
                       const accuracy = calculateAccuracy(session);
@@ -1408,8 +1407,6 @@ function App() {
                         </div>
                       );
                     })
-                  }
-                  })
                 )}
               </div>
             </div>
