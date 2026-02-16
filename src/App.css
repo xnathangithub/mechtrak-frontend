@@ -1286,13 +1286,13 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 20px;
+  padding: 20px 16px;
 }
 
 .stats-control-panel h4 {
   color: #888;
   font-size: 13px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1301,22 +1301,25 @@ body {
 .chart-type-buttons {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
 .chart-type-btn {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   color: #888;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.2s ease;
   width: 100%;
   text-align: left;
   display: block;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .chart-type-btn:hover {
@@ -1327,7 +1330,7 @@ body {
 
 .chart-type-btn.active {
   background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.35);
   color: #ffffff;
   font-weight: 600;
 }
