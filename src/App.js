@@ -1408,8 +1408,8 @@ function App() {
                 )}
               </div>
             </div>
+          </div>
         )}
-      </div>
 
       {showPlanModal && (
         <div className="modal-overlay" onClick={() => setShowPlanModal(false)}>
