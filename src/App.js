@@ -923,21 +923,38 @@ function App() {
               
               <div className="home-cards-grid">
                 <div className="glass-card" onClick={() => setCurrentView('sessions')}>
-                  <div className="card-icon">📊</div>
+                  <div className="card-icon">
+                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                  </svg>
+                  </div>
                   <h2>Sessions</h2>
                   <p>View and manage your training sessions</p>
                   <div className="card-badge">{sessions.length} total</div>
                 </div>
                 
                 <div className="glass-card" onClick={() => setCurrentView('plans')}>
-                  <div className="card-icon">🚀</div>
+                  <div className="card-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                      <polygon points="5,3 19,12 5,21"/>
+                    </svg>
+                  </div>
                   <h2>Start Session</h2>
                   <p>Begin a new training session</p>
                   <div className="card-badge">{customPlans.length} custom plans</div>
                 </div>
                 
                 <div className="glass-card" onClick={() => setCurrentView('stats')}>
-                  <div className="card-icon">📈</div>
+                  <div className="card-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                      <line x1="18" y1="20" x2="18" y2="10"/>
+                      <line x1="12" y1="20" x2="12" y2="4"/>
+                      <line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                  </div>
                   <h2>Stats</h2>
                   <p>Analyze your progress over time</p>
                   <div className="card-badge">{sessions.length} sessions</div>
