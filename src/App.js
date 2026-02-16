@@ -963,7 +963,11 @@ function App() {
           
           {currentView === 'sessions' && (
             <div>
-              <button className="back-button" onClick={() => setCurrentView('home')}>
+              <button className="back-button" onClick={() => {
+                setCurrentView('home');
+                setSelectedSession(null);
+                setSelectedShot(null);
+              }}>
                 ← Back to Home
               </button>
               
