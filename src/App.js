@@ -395,23 +395,32 @@ function App() {
     }
   };
 
-  const filterSessionsByDate = () => {
-    if (!statsDateRange.start || !statsDateRange.end) {
-      setAvailableSessions(sessions);
-      setSelectedSessionIds(sessions.map(s => s.id));
-      return;
+  const filterSessionsByDate = (planFilter = statsPlanFilter) => {
+    let filtered = [...sessions];
+
+    if (statsDateRange.start && statsDateRange.end) {
+      const start = new Date(statsDateRange.start);
+      const end = new Date(statsDateRange.end);
+      filtered = filtered.filter(session => {
+        const sessionDate = new Date(session.start_time);
+        return sessionDate >= start && sessionDate <= end;
+      });
     }
-    
-    const start = new Date(statsDateRange.start);
-    const end = new Date(statsDateRange.end);
-    
-    const filtered = sessions.filter(session => {
-      const sessionDate = new Date(session.start_time);
-      return sessionDate >= start && sessionDate <= end;
-    });
-    
+
+    if (planFilter !== 'all') {
+      filtered = filtered.filter(s => s.plan_id === parseInt(planFilter));
+    }
+
     setAvailableSessions(filtered);
-    setSelectedSessionIds(filtered.map(s => s.id));
+    setSelectedSessionIds(prev => {
+      const existingSelected = prev.filter(id =>
+        filtered.some(s => s.id === id)
+      );
+      const newSessions = filtered
+        .map(s => s.id)
+        .filter(id => !manuallyUnselectedIds.current.has(id) && !prev.includes(id));
+      return [...existingSelected, ...newSessions];
+    });
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -464,7 +473,7 @@ function App() {
     if (sessions.length > 0 && statsDateRange.start && statsDateRange.end) {
       filterSessionsByDate();
     }
-  }, [statsDateRange]);
+  }, [statsDateRange, statsPlanFilter]);
 
   const prepareChartData = () => {
     const selectedSessions = sessions.filter(s => 
@@ -1264,6 +1273,8 @@ function App() {
                       onChange={(e) => {
                         const planId = e.target.value;
                         setStatsPlanFilter(planId);
+                        manuallyUnselectedIds.current.clear();
+                        filterSessionsByDate(planId);
                         // Also filter selected session IDs
                         if (planId === 'all') {
                           manuallyUnselectedIds.current.clear();
