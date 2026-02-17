@@ -1041,7 +1041,7 @@ function App() {
                   ? 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)'
                   : 'radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%)',
                 pointerEvents: 'none',
-                zIndex: 0,
+                zIndex: -1,
                 transition: 'background 1s ease'
               }} />
 
