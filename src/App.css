@@ -108,55 +108,67 @@ body {
 
 /* Session Bars */
 .session-bar {
-  margin-bottom: 15px;
+  margin-bottom: 18px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s ease;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
 }
 
 .session-bar:hover {
-  transform: translateX(-5px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+  transform: translateX(-3px);
 }
 
 .session-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
-  font-size: 14px;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .session-name {
   font-weight: 500;
   color: #ffffff;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
 }
 
 .session-accuracy {
-  color: #888;
+  color: #666;
+  font-size: 12px;
+  flex-shrink: 0;
 }
 
 .progress-bar {
-  height: 20px;
-  background: #1a1a1a;
-  border-radius: 6px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
   overflow: hidden;
-  position: relative;
-  border: 1px solid #2a2a2a;
+  border: none;
 }
 
 .progress-fill {
   height: 100%;
   transition: width 0.3s ease;
+  border-radius: 999px;
 }
 
 .progress-fill.green {
-  background: #10b981;
+  background: linear-gradient(90deg, #10b981, #34d399);
 }
 
 .progress-fill.orange {
-  background: #f59e0b;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
 }
 
 .progress-fill.red {
-  background: #ef4444;
+  background: linear-gradient(90deg, #ef4444, #f87171);
 }
 
 /* Shot Cards */
