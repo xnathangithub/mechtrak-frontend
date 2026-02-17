@@ -1028,8 +1028,25 @@ function App() {
           )}
           
           {currentView === 'sessions' && (
-            <div>
-              
+            <div style={{ position: 'relative', minHeight: '100%' }}>
+              {/* Glow effect */}
+              <div style={{
+                position: 'fixed',
+                bottom: 0,
+                right: 0,
+                width: '600px',
+                height: '600px',
+                borderRadius: '50%',
+                background: sessions.some(s => s.status === 'active')
+                  ? 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)'
+                  : 'radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%)',
+                pointerEvents: 'none',
+                zIndex: 0,
+                transition: 'background 1s ease'
+              }} />
+
+            
+            <div style={{ position: 'relative', zIndex: 1 }}>
               {!selectedSession ? (
                 <div style={{ marginTop: '10px' }}>
                   <h1 style={{ fontSize: '36px', marginBottom: '20px' }}>Sessions</h1>
@@ -1242,6 +1259,7 @@ function App() {
               </div>
                 </div>
               )}
+              </div>
             </div>
           )}
           
