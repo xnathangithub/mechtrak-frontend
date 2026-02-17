@@ -123,6 +123,17 @@ function App() {
     }
   }, [sessions]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (showProfileMenu && !e.target.closest('.profile-menu-container')) {
+        setShowProfileMenu(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showProfileMenu]);
 
   const checkAuth = async () => {
     const token = localStorage.getItem('token');
@@ -857,8 +868,8 @@ function App() {
           }} style={{ cursor: 'pointer' }}>
           MECH TRAK
           </div>
-        {currentView !== 'sessions' && <div className="profile-placeholder">
-          <div style={{ position: 'relative' }}>
+        {currentView !== 'sessions' && (
+          <div className="profile-menu-container">
             <div 
               className="profile-icon" 
               onClick={() => setShowProfileMenu(!showProfileMenu)}
@@ -871,6 +882,15 @@ function App() {
             
             {showProfileMenu && (
               <div className="profile-menu">
+                <div className="profile-menu-header">
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: '#ffffff' }}>
+                    {user.username || user.email}
+                  </div>
+                  <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
+                    {user.email}
+                  </div>
+                </div>
+                
                 <button className="profile-menu-item" onClick={() => {
                   setShowProfileMenu(false);
                   setShowFAQ(true);
@@ -886,9 +906,9 @@ function App() {
               </div>
             )}
           </div>
-          </div>}
+        )}
         {currentView === 'sessions' && <div></div>}
-      </header>
+        </header>
 
       <div className="main-container">
         <div className="main-section">
