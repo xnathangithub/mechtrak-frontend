@@ -1263,60 +1263,86 @@ function App() {
           
           {currentView === 'plans' && (
             <div>
-              <div style={{ marginTop: '10px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-                  <div>
-                    <h1 style={{ fontSize: '36px', marginBottom: '10px' }}>Training Plans</h1>
-                    <p style={{ color: '#888' }}>Create and manage your custom training plans</p>
-                  </div>
-                  <button className="glossy-btn" onClick={() => setShowPlanModal(true)}>
-                    + Start A Session
-                  </button>
+              <div style={{ padding: '30px 40px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <h1 style={{ fontSize: '36px', marginBottom: '8px' }}>Training Plans</h1>
+                  <p style={{ color: '#888', fontSize: '14px' }}>Create and manage your custom training plans</p>
                 </div>
-                {customPlans.length === 0 ? (
-                  <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>
-                    <p style={{ fontSize: '18px' }}>No custom plans yet.</p>
-                    <p style={{ marginTop: '10px' }}>Click "Start A Session" to get started!</p>
-                  </div>
-                ) : (
-                  <div className="plans-list-grid">
-                    {customPlans.map((plan) => (
-                      <div key={plan.id} className="plan-list-item">
-                        <button className="star-btn">☆</button>
-                        <div className="plan-list-content">
-                          <h3>{plan.name}</h3>
-                          <p className="plan-description">{plan.description || 'No description'}</p>
-                          <p className="plan-shots-list">{plan.shot_names.join(' • ')}</p>
+              </div>
+
+              <div className="plans-grid-new">
+                {/* Create New Plan Card */}
+                <div className="plan-create-card" onClick={() => setShowPlanModal(true)}>
+                  <div className="plan-create-icon">+</div>
+                  <div className="plan-create-text">Create New Plan</div>
+                  <div className="plan-create-subtext">Build a custom training routine</div>
+                </div>
+
+                {/* Plan Cards */}
+                {plans.map((plan, index) => {
+                  const planColors = ['#a855f7', '#00d4ff', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
+                  const color = planColors[index % planColors.length];
+                  const sessionCount = sessions.filter(s => s.plan_id === plan.id).length;
+                  const lastUsed = sessions
+                    .filter(s => s.plan_id === plan.id)
+                    .sort((a, b) => new Date(b.start_time) - new Date(a.start_time))[0];
+
+                  return (
+                    <div 
+                      key={plan.id} 
+                      className="plan-card-new"
+                      style={{ '--plan-color': color }}
+                    >
+                      <div className="plan-card-title">{plan.name}</div>
+                      {plan.description && (
+                        <div className="plan-card-description">{plan.description}</div>
+                      )}
+
+                      <div className="plan-card-meta">
+                        <div className="plan-meta-item">
+                          <span className="plan-meta-label">Shots</span>
+                          <span className="plan-meta-value">{plan.shots?.length || 0}</span>
                         </div>
-                        <div className="plan-list-meta">
-                          <span className="plan-shot-count">{plan.shot_names.length} shots</span>
-                          <button 
-                            className="glossy-btn"
-                            style={{ padding: '8px 16px', fontSize: '13px' }}
-                            onClick={() => startSessionWithPlan(plan.id)}
-                            disabled={startingSession}
-                          >
-                            {startingSession ? <span className="btn-spinner"></span> : 'Use Plan'}
-                          </button>
-                          <button 
-                            onClick={() => deletePlan(plan.id)}
-                            style={{
-                              background: 'rgba(239, 68, 68, 0.1)',
-                              border: '1px solid rgba(239, 68, 68, 0.3)',
-                              color: '#ef4444',
-                              padding: '8px 14px',
-                              borderRadius: '8px',
-                              cursor: 'pointer',
-                              fontSize: '13px'
-                            }}
-                          >
-                            🗑️
-                          </button>
+                        <div className="plan-meta-item">
+                          <span className="plan-meta-label">Sessions</span>
+                          <span className="plan-meta-value">{sessionCount}</span>
                         </div>
+                        {lastUsed && (
+                          <div className="plan-meta-item">
+                            <span className="plan-meta-label">Last Used</span>
+                            <span className="plan-meta-value" style={{ fontSize: '13px' }}>
+                              {new Date(lastUsed.start_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                            </span>
+                          </div>
+                        )}
                       </div>
-                    ))}
-                  </div>
-                )}
+
+                      <div className="plan-shot-pills">
+                        {(plan.shots || []).map((shot, i) => (
+                          <span key={i} className="plan-shot-pill">{shot.name}</span>
+                        ))}
+                      </div>
+
+                      <div className="plan-card-actions">
+                        <button 
+                          className="plan-use-btn"
+                          onClick={() => {
+                            setSelectedPlan(plan);
+                            setCurrentView('connecting');
+                          }}
+                        >
+                          Use Plan
+                        </button>
+                        <button 
+                          className="plan-delete-btn"
+                          onClick={() => deletePlan(plan.id)}
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
