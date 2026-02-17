@@ -910,7 +910,7 @@ function App() {
         {currentView === 'sessions' && <div></div>}
         </header>
 
-      <div className="main-container">
+      <div className="main-container" style={{ marginRight: currentView === 'sessions' ? '320px' : '0' }}>
         <div className="main-section">
 
           {currentView === 'connecting' && (
