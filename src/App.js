@@ -1375,8 +1375,8 @@ function App() {
                     <div className="stats-control-panel">
                       <h4>Chart Mode</h4>
                       <div className="chart-type-buttons" style={{ minHeight: '80px' }}>
-                        <button className={`chart-type-btn ${statsChartMode === 'overview' ? 'active' : ''}`} onClick={() => setStatsChartMode('overview')}>Shot Breakdown</button>
                         <button className={`chart-type-btn ${statsChartMode === 'breakdown' ? 'active' : ''}`} onClick={() => setStatsChartMode('breakdown')}>Session Overview</button>
+                        <button className={`chart-type-btn ${statsChartMode === 'overview' ? 'active' : ''}`} onClick={() => setStatsChartMode('overview')}>Shot Breakdown</button>
                       </div>
                           </div>
                     <div className="stats-control-panel">
