@@ -1041,11 +1041,11 @@ function App() {
                   ? 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)'
                   : 'radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%)',
                 pointerEvents: 'none',
-                zIndex: -1,
+                zIndex: 0,
                 transition: 'background 1s ease'
               }} />
 
-              <div style={{ position: 'relative', zIndex: 1 }}>
+              <div style={{ position: 'relative', zIndex: 1, pointerEvents: 'all' }}>
                 {!selectedSession ? (
                   <div style={{ marginTop: '10px' }}>
                     <h1 style={{ fontSize: '36px', marginBottom: '20px' }}>Sessions</h1>
