@@ -924,7 +924,17 @@ function App() {
                         </div>
                         <div className="instruction-step">
                           <div className="step-number">2</div>
-                          <div className="step-text">Download the Mech Trak plugin .dll file</div>
+                          <div className="step-text">
+                        Download the Mech Trak plugin from{' '}
+                        <a 
+                          href="https://github.com/xnathangithub/MechTrak/releases/download/V1.0.0/MechTrak.dll"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: '#10b981', textDecoration: 'underline' }}
+                        >
+                          here
+                        </a>
+                        </div>
                         </div>
                         <div className="instruction-step">
                           <div className="step-number">3</div>
