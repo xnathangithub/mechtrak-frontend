@@ -1041,34 +1041,30 @@ function App() {
                   ? 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)'
                   : 'radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%)',
                 pointerEvents: 'none',
-                zIndex: 0,
+                zIndex: -1,
                 transition: 'background 1s ease'
               }} />
 
-              
               <div style={{ position: 'relative', zIndex: 1 }}>
-
-
-              {!selectedSession ? (
-                <div style={{ marginTop: '10px' }}>
-                  <h1 style={{ fontSize: '36px', marginBottom: '20px' }}>Sessions</h1>
-                  {sessions.length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>
-                      <div style={{ fontSize: '48px', marginBottom: '20px' }}>🎯</div>
-                      <p style={{ fontSize: '18px', marginBottom: '10px' }}>No sessions yet!</p>
-                      <p style={{ fontSize: '14px' }}>Start a training session to see your stats here</p>
-                      <button 
-                        className="glossy-btn" 
-                        style={{ marginTop: '20px' }}
-                        onClick={() => setCurrentView('home')}
-                      >
-                        Start Training
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <p style={{ color: '#888', marginBottom: '20px' }}>Select a session from the sidebar →</p>
-                      {/* Show active session banner if one exists */}
+                {!selectedSession ? (
+                  <div style={{ marginTop: '10px' }}>
+                    <h1 style={{ fontSize: '36px', marginBottom: '20px' }}>Sessions</h1>
+                    {sessions.length === 0 ? (
+                      <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>
+                        <div style={{ fontSize: '48px', marginBottom: '20px' }}>🎯</div>
+                        <p style={{ fontSize: '18px', marginBottom: '10px' }}>No sessions yet!</p>
+                        <p style={{ fontSize: '14px' }}>Start a training session to see your stats here</p>
+                        <button 
+                          className="glossy-btn" 
+                          style={{ marginTop: '20px' }}
+                          onClick={() => setCurrentView('home')}
+                        >
+                          Start Training
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <p style={{ color: '#888', marginBottom: '20px' }}>Select a session from the sidebar →</p>
                         {sessions.some(s => s.status === 'active') ? (
                           <div style={{
                             background: 'rgba(16, 185, 129, 0.1)',
@@ -1121,147 +1117,147 @@ function App() {
                       </div>
                     )}
                   </div>
-              ) : selectedShot ? (
-                <div>
-                  <button className="back-button" onClick={() => setSelectedShot(null)} style={{ marginTop: '20px' }}>
-                    ← Back to Shots
-                  </button>
-                  <div style={{ marginTop: '30px' }}>
-                    <h1 style={{ fontSize: '36px', marginBottom: '10px', color: '#ffffff' }}>
-                      Shot {selectedShot.shotNum}
-                    </h1>
-                    <div className="detail-stats-grid">
-                      <div className="stat-box">
-                        <div className="stat-label">Goals</div>
-                        <div className="stat-value">{selectedShot.goals}</div>
+                ) : selectedShot ? (
+                  <div>
+                    <button className="back-button" onClick={() => setSelectedShot(null)} style={{ marginTop: '20px' }}>
+                      ← Back to Shots
+                    </button>
+                    <div style={{ marginTop: '30px' }}>
+                      <h1 style={{ fontSize: '36px', marginBottom: '10px', color: '#ffffff' }}>
+                        Shot {selectedShot.shotNum}
+                      </h1>
+                      <div className="detail-stats-grid">
+                        <div className="stat-box">
+                          <div className="stat-label">Goals</div>
+                          <div className="stat-value">{selectedShot.goals}</div>
+                        </div>
+                        <div className="stat-box">
+                          <div className="stat-label">Attempts</div>
+                          <div className="stat-value">{selectedShot.attempts}</div>
+                        </div>
+                        <div className="stat-box">
+                          <div className="stat-label">Accuracy</div>
+                          <div className="stat-value">
+                            {selectedShot.attempts > 0 
+                              ? Math.round((selectedShot.goals / selectedShot.attempts) * 100) 
+                              : 0}%
+                          </div>
+                        </div>
                       </div>
-                      <div className="stat-box">
-                        <div className="stat-label">Attempts</div>
-                        <div className="stat-value">{selectedShot.attempts}</div>
-                      </div>
-                      <div className="stat-box">
-                        <div className="stat-label">Accuracy</div>
-                        <div className="stat-value">
-                          {selectedShot.attempts > 0 
-                            ? Math.round((selectedShot.goals / selectedShot.attempts) * 100) 
-                            : 0}%
+                      <div className="chart-container">
+                        <h3>Goals vs Attempts</h3>
+                        <div style={{ color: '#888', padding: '40px', textAlign: 'center' }}>
+                          Pie chart coming soon...
                         </div>
                       </div>
                     </div>
-                    <div className="chart-container">
-                      <h3>Goals vs Attempts</h3>
-                      <div style={{ color: '#888', padding: '40px', textAlign: 'center' }}>
-                        Pie chart coming soon...
-                      </div>
-                    </div>
                   </div>
-                </div>
-              ) : (
-                <div style={{ marginTop: '10px' }}>
-                  <div style={{ marginBottom: '40px' }}>
-                    {editingName ? (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                        <input
-                          type="text"
-                          value={tempName}
-                          onChange={(e) => setTempName(e.target.value)}
-                          className="form-input"
-                          style={{ fontSize: '24px', fontWeight: '700', maxWidth: '400px' }}
-                          autoFocus
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
+                ) : (
+                  <div style={{ marginTop: '10px' }}>
+                    <div style={{ marginBottom: '40px' }}>
+                      {editingName ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                          <input
+                            type="text"
+                            value={tempName}
+                            onChange={(e) => setTempName(e.target.value)}
+                            className="form-input"
+                            style={{ fontSize: '24px', fontWeight: '700', maxWidth: '400px' }}
+                            autoFocus
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                renameSession(selectedSession.session_id, tempName);
+                                setEditingName(false);
+                              }
+                              if (e.key === 'Escape') {
+                                setEditingName(false);
+                              }
+                            }}
+                          />
+                          <button
+                            className="glossy-btn"
+                            style={{ padding: '8px 16px', fontSize: '13px' }}
+                            onClick={() => {
                               renameSession(selectedSession.session_id, tempName);
                               setEditingName(false);
-                            }
-                            if (e.key === 'Escape') {
-                              setEditingName(false);
-                            }
-                          }}
-                        />
-                        <button
-                          className="glossy-btn"
-                          style={{ padding: '8px 16px', fontSize: '13px' }}
-                          onClick={() => {
-                            renameSession(selectedSession.session_id, tempName);
-                            setEditingName(false);
-                          }}
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={() => setEditingName(false)}
-                          style={{ background: 'none', border: 'none', color: '#888', cursor: 'pointer' }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    ) : (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                        <h1 style={{ fontSize: '36px' }}>
-                          {selectedSession.name || `Session ${selectedSession.session_id.slice(-8)}`}
-                        </h1>
-                        <button className="rename-btn" onClick={() => setEditingName(true)}>
-                          ✏️ Rename
+                            }}
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => setEditingName(false)}
+                            style={{ background: 'none', border: 'none', color: '#888', cursor: 'pointer' }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                          <h1 style={{ fontSize: '36px' }}>
+                            {selectedSession.name || `Session ${selectedSession.session_id.slice(-8)}`}
+                          </h1>
+                          <button className="rename-btn" onClick={() => { setEditingName(true); setTempName(selectedSession.name || ''); }}>
+                            ✏️ Rename
+                          </button>
+                        </div>
+                      )}
+                      <div style={{ display: 'flex', gap: '30px', color: '#888', alignItems: 'center' }}>
+                        <span>Duration: {selectedSession.duration_minutes || 0} min</span>
+                        <span>Total: {selectedSession.total_goals}/{selectedSession.total_attempts}</span>
+                        <span>Accuracy: {Math.round(selectedSession.total_accuracy || 0)}%</span>
+                        <button className="delete-btn" onClick={() => deleteSession(selectedSession.session_id)}>
+                          🗑️ Delete Session
                         </button>
                       </div>
-                    )}
-                    <div style={{ display: 'flex', gap: '30px', color: '#888', alignItems: 'center' }}>
-                      <span>Duration: {selectedSession.duration_minutes || 0} min</span>
-                      <span>Total: {selectedSession.total_goals}/{selectedSession.total_attempts}</span>
-                      <span>Accuracy: {Math.round(selectedSession.total_accuracy || 0)}%</span>
-                      <button className="delete-btn" onClick={() => deleteSession(selectedSession.session_id)}>
-                        🗑️ Delete Session
-                      </button>
+                    </div>
+                    <h2 style={{ marginBottom: '20px', color: '#ffffff' }}>Shots</h2>
+                    <div className="shot-cards-container">
+                      {Object.entries(selectedSession.shots_data || {}).map(([shotNum, shot]) => {
+                        const accuracy = shot.attempts > 0 
+                          ? (shot.goals / shot.attempts) * 100 
+                          : -1;
+                        
+                        const accuracyClass = accuracy === -1 
+                          ? 'accuracy-none'
+                          : accuracy >= 50 
+                          ? 'accuracy-high' 
+                          : accuracy >= 25 
+                          ? 'accuracy-medium' 
+                          : 'accuracy-low';
+
+                        const barColor = accuracy === -1
+                          ? 'rgba(255, 255, 255, 0.3)'
+                          : accuracy >= 50
+                          ? 'rgba(16, 185, 129, 0.6)'
+                          : accuracy >= 25
+                          ? 'rgba(245, 158, 11, 0.6)'
+                          : 'rgba(239, 68, 68, 0.6)';
+
+                        return (
+                          <div 
+                            key={shotNum} 
+                            className={`shot-card ${accuracyClass}`}
+                            onClick={() => setSelectedShot({ shotNum, ...shot })}
+                          >
+                            <div className="shot-number">Shot {shotNum}</div>
+                            <div className="shot-type">{shot.shotType || 'Unknown'}</div>
+                            <div className="vertical-bar-container">
+                              <div className="vertical-bar-background">
+                                <div className="vertical-bar-fill" style={{ 
+                                  height: `${accuracy === -1 ? 0 : accuracy}%`, 
+                                  background: barColor
+                                }} />
+                              </div>
+                              <div className="bar-label">{shot.goals}/{shot.attempts}</div>
+                            </div>
+                            <div className="shot-stats">{accuracy === -1 ? '0%' : `${Math.round(accuracy)}%`}</div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
-                  <h2 style={{ marginBottom: '20px', color: '#ffffff' }}>Shots</h2>
-              <div className="shot-cards-container">
-                {Object.entries(selectedSession.shots_data || {}).map(([shotNum, shot]) => {
-                  const accuracy = shot.attempts > 0 
-                    ? (shot.goals / shot.attempts) * 100 
-                    : -1;
-                  
-                  const accuracyClass = accuracy === -1 
-                    ? 'accuracy-none'
-                    : accuracy >= 50 
-                    ? 'accuracy-high' 
-                    : accuracy >= 25 
-                    ? 'accuracy-medium' 
-                    : 'accuracy-low';
-
-                  const barColor = accuracy === -1
-                    ? 'rgba(255, 255, 255, 0.3)'
-                    : accuracy >= 50
-                    ? 'rgba(16, 185, 129, 0.6)'
-                    : accuracy >= 25
-                    ? 'rgba(245, 158, 11, 0.6)'
-                    : 'rgba(239, 68, 68, 0.6)';
-
-                  return (
-                    <div 
-                      key={shotNum} 
-                      className={`shot-card ${accuracyClass}`}
-                      onClick={() => setSelectedShot({ shotNum, ...shot })}
-                    >
-                      <div className="shot-number">Shot {shotNum}</div>
-                      <div className="shot-type">{shot.shotType || 'Unknown'}</div>
-                      <div className="vertical-bar-container">
-                        <div className="vertical-bar-background">
-                          <div className="vertical-bar-fill" style={{ 
-                            height: `${accuracy === -1 ? 0 : accuracy}%`, 
-                            background: barColor
-                          }} />
-                        </div>
-                        <div className="bar-label">{shot.goals}/{shot.attempts}</div>
-                      </div>
-                      <div className="shot-stats">{accuracy === -1 ? '0%' : `${Math.round(accuracy)}%`}</div>
-                    </div>
-                  );
-                })}
+                )}
               </div>
-                </div>
-              )}
-            </div>
             </div>
           )}
           
