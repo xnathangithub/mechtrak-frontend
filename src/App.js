@@ -636,37 +636,31 @@ function App() {
                   <div className="coming-soon-badge">Coming Soon</div>
                 </div>
 
-                {/* Create New Plan - goes directly to form */}
-                <div className="plan-create-card" onClick={() => setShowCreatePlan(true)}>
-                  <div className="plan-create-icon">+</div>
-                  <div className="plan-create-text">Create New Plan</div>
-                  <div className="plan-create-subtext">Build a custom training routine</div>
-                </div>
-
-                {/* Plan Library */}
+                {/* Plan Library - opens modal with ALL plans (preset + custom) */}
                 <div className="plan-create-card" onClick={() => setShowLibraryModal(true)}>
                   <div className="plan-create-icon">📚</div>
                   <div className="plan-create-text">Plan Library</div>
                   <div className="plan-create-subtext">Browse pre-made training plans</div>
                 </div>
 
-                {/* User's Custom Plans */}
-                {customPlans.map((plan, index) => {
+                {/* Show user's most recent custom plan as preview */}
+                {customPlans.length > 0 && (() => {
+                  const plan = customPlans[0];
                   const planColors = ['#a855f7', '#00d4ff', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
-                  const color = planColors[index % planColors.length];
+                  const color = planColors[0];
                   const sessionCount = sessions.filter(s => s.plan_id === plan.id).length;
                   const lastUsed = sessions.filter(s => s.plan_id === plan.id).sort((a, b) => new Date(b.start_time) - new Date(a.start_time))[0];
                   return (
                     <div key={plan.id} className="plan-card-new" style={{ '--plan-color': color }}>
-                      <div className="plan-card-title">{plan.name}</div>
-                      {plan.description && <div className="plan-card-description">{plan.description}</div>}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <div className="plan-card-title">My Mechs</div>
+                        <div style={{ fontSize: '11px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Most Recent</div>
+                      </div>
+                      <div className="plan-card-description">Mechanics I want to focus on.</div>
                       <div className="plan-card-meta">
                         <div className="plan-meta-item"><span className="plan-meta-label">Shots</span><span className="plan-meta-value">{plan.shots?.length || 0}</span></div>
                         <div className="plan-meta-item"><span className="plan-meta-label">Sessions</span><span className="plan-meta-value">{sessionCount}</span></div>
                         {lastUsed && <div className="plan-meta-item"><span className="plan-meta-label">Last Used</span><span className="plan-meta-value" style={{ fontSize: '13px' }}>{new Date(lastUsed.start_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span></div>}
-                      </div>
-                      <div className="plan-shot-pills">
-                        {(plan.shots || []).map((shot, i) => <span key={i} className="plan-shot-pill">{shot.name}</span>)}
                       </div>
                       <div className="plan-card-actions">
                         <button className="plan-use-btn" onClick={() => startSessionWithPlan(plan.id)} disabled={startingSession}>
@@ -676,7 +670,7 @@ function App() {
                       </div>
                     </div>
                   );
-                })}
+                })()}
               </div>
             </div>
           )}
@@ -807,7 +801,7 @@ function App() {
         </div>
       )}
 
-      {/* Plan Library Modal */}
+      {/* Plan Library Modal - shows ALL plans (preset + custom) */}
       {showLibraryModal && (
         <div className="modal-overlay" onClick={() => setShowLibraryModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -815,26 +809,75 @@ function App() {
               <h2>Plan Library</h2>
               <button className="close-btn" onClick={() => setShowLibraryModal(false)}>✕</button>
             </div>
-            <div className="plans-grid">
-              {presetPlans.length === 0 ? (
+            
+            {/* Create New Plan button at top */}
+            <div style={{ padding: '20px 30px 0' }}>
+              <button 
+                className="glossy-btn" 
+                style={{ width: '100%', padding: '14px', fontSize: '15px' }}
+                onClick={() => { setShowLibraryModal(false); setShowCreatePlan(true); }}
+              >
+                + Create New Plan
+              </button>
+            </div>
+            
+            <div className="plans-grid" style={{ padding: '20px 30px 30px' }}>
+              {[...presetPlans, ...customPlans].length === 0 ? (
                 <div style={{ padding: '40px', textAlign: 'center', color: '#888', gridColumn: '1 / -1' }}>
                   <div style={{ fontSize: '48px', marginBottom: '16px' }}>📚</div>
-                  <p style={{ fontSize: '18px', marginBottom: '10px' }}>No pre-made plans yet</p>
-                  <p style={{ fontSize: '14px' }}>Pre-made plans are coming soon!</p>
+                  <p style={{ fontSize: '18px', marginBottom: '10px' }}>No plans yet</p>
+                  <p style={{ fontSize: '14px' }}>Create your first training plan to get started!</p>
                 </div>
-              ) : presetPlans.map((plan) => {
-                const planImages = { 'Reset Training': 'reset.png', 'Musty Flick Mastery': 'musty.png', 'Air Dribble Foundation': 'airdribble.png' };
-                return (
-                  <div key={plan.id} className="plan-card">
-                    <img src={`/images/${planImages[plan.name] || 'reset.png'}`} alt={plan.name} className="plan-car-image" />
-                    <h3>{plan.name}</h3><p>{plan.description}</p>
-                    <div className="plan-shots">{plan.shot_names?.length || 0} shots</div>
-                    <button className="glossy-btn select-plan-btn" onClick={() => startSessionWithPlan(plan.id)} disabled={startingSession}>
-                      {startingSession ? <span className="btn-spinner"></span> : 'Select Plan'}
-                    </button>
-                  </div>
-                );
-              })}
+              ) : (
+                [...presetPlans, ...customPlans].map((plan, index) => {
+                  const planColors = ['#a855f7', '#00d4ff', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
+                  const color = planColors[index % planColors.length];
+                  const sessionCount = sessions.filter(s => s.plan_id === plan.id).length;
+                  const lastUsed = sessions.filter(s => s.plan_id === plan.id).sort((a, b) => new Date(b.start_time) - new Date(a.start_time))[0];
+                  const isPreset = plan.is_preset;
+                  
+                  return (
+                    <div key={plan.id} className="plan-card-new plan-library-card" style={{ '--plan-color': color }}>
+                      {isPreset && (
+                        <div style={{ 
+                          position: 'absolute', 
+                          top: '12px', 
+                          right: '12px', 
+                          background: 'rgba(88, 86, 214, 0.2)', 
+                          border: '1px solid rgba(88, 86, 214, 0.4)',
+                          borderRadius: '999px',
+                          padding: '4px 10px',
+                          fontSize: '10px',
+                          color: '#8b86d6',
+                          fontWeight: '600',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px'
+                        }}>
+                          Pre-made
+                        </div>
+                      )}
+                      <div className="plan-card-title">{plan.name}</div>
+                      {plan.description && <div className="plan-card-description">{plan.description}</div>}
+                      <div className="plan-card-meta">
+                        <div className="plan-meta-item"><span className="plan-meta-label">Shots</span><span className="plan-meta-value">{plan.shots?.length || 0}</span></div>
+                        <div className="plan-meta-item"><span className="plan-meta-label">Sessions</span><span className="plan-meta-value">{sessionCount}</span></div>
+                        {lastUsed && <div className="plan-meta-item"><span className="plan-meta-label">Last Used</span><span className="plan-meta-value" style={{ fontSize: '13px' }}>{new Date(lastUsed.start_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span></div>}
+                      </div>
+                      <div className="plan-shot-pills">
+                        {(plan.shots || []).map((shot, i) => <span key={i} className="plan-shot-pill">{shot.name}</span>)}
+                      </div>
+                      <div className="plan-card-actions">
+                        <button className="plan-use-btn" onClick={() => startSessionWithPlan(plan.id)} disabled={startingSession}>
+                          {startingSession ? <span className="btn-spinner"></span> : 'Use Plan'}
+                        </button>
+                        {!isPreset && (
+                          <button className="plan-delete-btn" onClick={() => deletePlan(plan.id)}>🗑️</button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
