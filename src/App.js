@@ -23,6 +23,7 @@ function App() {
   const [statsChartType, setStatsChartType] = useState('line');
   const [statsChartMode, setStatsChartMode] = useState('overview');
   const [expandedTutorial, setExpandedTutorial] = useState(null);
+  const [showTrainingPackInfo, setShowTrainingPackInfo] = useState(true);
   const [user, setUser] = useState(null);
   const [authView, setAuthView] = useState('login');
   const [authEmail, setAuthEmail] = useState('');
@@ -608,141 +609,170 @@ function App() {
                           backdropFilter: 'blur(20px)',
                           border: '1px solid rgba(255, 255, 255, 0.08)',
                           borderRadius: '20px',
-                          padding: '28px',
+                          padding: showTrainingPackInfo ? '28px' : '20px 28px',
                           marginBottom: '30px',
-                          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08)'
+                          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+                          transition: 'all 0.3s ease'
                         }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-                            <div style={{
-                              width: '40px',
-                              height: '40px',
-                              background: 'rgba(168, 85, 247, 0.2)',
-                              border: '1px solid rgba(168, 85, 247, 0.4)',
-                              borderRadius: '10px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: '20px'
-                            }}>📦</div>
-                            <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#ffffff' }}>Training Pack Info</h3>
+                          <div 
+                            style={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              justifyContent: 'space-between',
+                              marginBottom: showTrainingPackInfo ? '20px' : '0',
+                              cursor: 'pointer'
+                            }}
+                            onClick={() => setShowTrainingPackInfo(!showTrainingPackInfo)}
+                          >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                              <div style={{
+                                width: '40px',
+                                height: '40px',
+                                background: 'rgba(168, 85, 247, 0.2)',
+                                border: '1px solid rgba(168, 85, 247, 0.4)',
+                                borderRadius: '10px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '20px'
+                              }}>📦</div>
+                              <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#ffffff' }}>Training Pack Info</h3>
+                            </div>
+                            <div style={{ 
+                              fontSize: '14px', 
+                              color: '#888',
+                              transform: showTrainingPackInfo ? 'rotate(180deg)' : 'rotate(0deg)',
+                              transition: 'transform 0.3s ease',
+                              userSelect: 'none'
+                            }}>
+                              ▼
+                            </div>
                           </div>
 
-                          {/* Recommended Training Pack */}
-                          {currentPlan.training_pack_code && (
-                            <div style={{ 
-                              background: 'rgba(255, 255, 255, 0.03)',
-                              border: '1px solid rgba(255, 255, 255, 0.1)',
-                              borderRadius: '12px',
-                              padding: '20px',
-                              marginBottom: '20px'
-                            }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                                <div>
-                                  <div style={{ fontSize: '12px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>Recommended Pack</div>
-                                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#ffffff' }}>{currentPlan.name}</div>
-                                </div>
-                                <button 
-                                  className="glossy-btn" 
-                                  style={{ padding: '8px 16px', fontSize: '13px' }}
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(currentPlan.training_pack_code);
-                                    showToast('Training pack code copied!');
-                                  }}
-                                >
-                                  Copy Code
-                                </button>
-                              </div>
-                              <div style={{ 
-                                background: 'rgba(0, 0, 0, 0.3)',
-                                border: '1px solid rgba(255, 255, 255, 0.1)',
-                                borderRadius: '8px',
-                                padding: '12px 16px',
-                                fontFamily: 'monospace',
-                                fontSize: '14px',
-                                color: '#10b981',
-                                letterSpacing: '1px'
-                              }}>
-                                {currentPlan.training_pack_code}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Shot Tutorials */}
-                          {currentPlan.shots && currentPlan.shots.length > 0 && (
-                            <div>
-                              <div style={{ fontSize: '14px', color: '#888', marginBottom: '12px', fontWeight: '600' }}>Shot Tutorials</div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                {currentPlan.shots.map((shot, index) => {
-                                  if (!shot.tutorial_url) return null;
-                                  
-                                  // Extract YouTube video ID from URL
-                                  const getYouTubeId = (url) => {
-                                    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/);
-                                    return match ? match[1] : null;
-                                  };
-                                  
-                                  const videoId = getYouTubeId(shot.tutorial_url);
-                                  const isExpanded = expandedTutorial === index;
-                                  
-                                  return (
-                                    <div key={index}>
-                                      <div 
-                                        style={{
-                                          background: 'rgba(255, 255, 255, 0.03)',
-                                          border: '1px solid rgba(255, 255, 255, 0.08)',
-                                          borderRadius: isExpanded ? '10px 10px 0 0' : '10px',
-                                          padding: '14px 16px',
-                                          display: 'flex',
-                                          justifyContent: 'space-between',
-                                          alignItems: 'center',
-                                          cursor: 'pointer',
-                                          transition: 'all 0.2s ease'
-                                        }}
-                                        onClick={() => setExpandedTutorial(isExpanded ? null : index)}
-                                      >
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                          <div style={{ fontSize: '16px' }}>🎥</div>
-                                          <div>
-                                            <div style={{ fontSize: '14px', fontWeight: '500', color: '#ffffff' }}>Shot {index + 1}: {shot.name}</div>
-                                            <div style={{ fontSize: '12px', color: '#666' }}>{shot.tutorial_title || 'Tutorial video'}</div>
-                                          </div>
-                                        </div>
-                                        <div style={{ 
-                                          fontSize: '12px', 
-                                          color: '#888',
-                                          transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                                          transition: 'transform 0.2s ease'
-                                        }}>
-                                          ▼
-                                        </div>
-                                      </div>
-                                      
-                                      {/* Video Embed Dropdown */}
-                                      {isExpanded && videoId && (
-                                        <div style={{
-                                          background: 'rgba(0, 0, 0, 0.4)',
-                                          border: '1px solid rgba(255, 255, 255, 0.1)',
-                                          borderTop: 'none',
-                                          borderRadius: '0 0 10px 10px',
-                                          padding: '16px',
-                                          animation: 'slideDown 0.2s ease'
-                                        }}>
-                                          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '8px' }}>
-                                            <iframe
-                                              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                                              src={`https://www.youtube.com/embed/${videoId}`}
-                                              title={shot.tutorial_title || shot.name}
-                                              frameBorder="0"
-                                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                              allowFullScreen
-                                            />
-                                          </div>
-                                        </div>
-                                      )}
+                          {showTrainingPackInfo && (
+                            <div style={{ animation: 'slideDown 0.3s ease' }}>
+                              {/* Recommended Training Pack */}
+                              {currentPlan.training_pack_code && (
+                                <div style={{ 
+                                  background: 'rgba(255, 255, 255, 0.03)',
+                                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                                  borderRadius: '12px',
+                                  padding: '20px',
+                                  marginBottom: '20px'
+                                }}>
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                                    <div>
+                                      <div style={{ fontSize: '12px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>Recommended Pack</div>
+                                      <div style={{ fontSize: '18px', fontWeight: '600', color: '#ffffff' }}>{currentPlan.name}</div>
                                     </div>
-                                  );
-                                })}
-                              </div>
+                                    <button 
+                                      className="glossy-btn" 
+                                      style={{ padding: '8px 16px', fontSize: '13px' }}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigator.clipboard.writeText(currentPlan.training_pack_code);
+                                        showToast('Training pack code copied!');
+                                      }}
+                                    >
+                                      Copy Code
+                                    </button>
+                                  </div>
+                                  <div style={{ 
+                                    background: 'rgba(0, 0, 0, 0.3)',
+                                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                                    borderRadius: '8px',
+                                    padding: '12px 16px',
+                                    fontFamily: 'monospace',
+                                    fontSize: '14px',
+                                    color: '#10b981',
+                                    letterSpacing: '1px'
+                                  }}>
+                                    {currentPlan.training_pack_code}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Shot Tutorials */}
+                              {currentPlan.shots && currentPlan.shots.length > 0 && (
+                                <div>
+                                  <div style={{ fontSize: '14px', color: '#888', marginBottom: '12px', fontWeight: '600' }}>Shot Tutorials</div>
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                    {currentPlan.shots.map((shot, index) => {
+                                      if (!shot.tutorial_url) return null;
+                                      
+                                      // Extract YouTube video ID from URL
+                                      const getYouTubeId = (url) => {
+                                        const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/);
+                                        return match ? match[1] : null;
+                                      };
+                                      
+                                      const videoId = getYouTubeId(shot.tutorial_url);
+                                      const isExpanded = expandedTutorial === index;
+                                      
+                                      return (
+                                        <div key={index}>
+                                          <div 
+                                            style={{
+                                              background: 'rgba(255, 255, 255, 0.03)',
+                                              border: '1px solid rgba(255, 255, 255, 0.08)',
+                                              borderRadius: isExpanded ? '10px 10px 0 0' : '10px',
+                                              padding: '14px 16px',
+                                              display: 'flex',
+                                              justifyContent: 'space-between',
+                                              alignItems: 'center',
+                                              cursor: 'pointer',
+                                              transition: 'all 0.2s ease'
+                                            }}
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              setExpandedTutorial(isExpanded ? null : index);
+                                            }}
+                                          >
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                              <div style={{ fontSize: '16px' }}>🎥</div>
+                                              <div>
+                                                <div style={{ fontSize: '14px', fontWeight: '500', color: '#ffffff' }}>Shot {index + 1}: {shot.name}</div>
+                                                <div style={{ fontSize: '12px', color: '#666' }}>{shot.tutorial_title || 'Tutorial video'}</div>
+                                              </div>
+                                            </div>
+                                            <div style={{ 
+                                              fontSize: '12px', 
+                                              color: '#888',
+                                              transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                                              transition: 'transform 0.2s ease'
+                                            }}>
+                                              ▼
+                                            </div>
+                                          </div>
+                                          
+                                          {/* Video Embed Dropdown */}
+                                          {isExpanded && videoId && (
+                                            <div style={{
+                                              background: 'rgba(0, 0, 0, 0.4)',
+                                              border: '1px solid rgba(255, 255, 255, 0.1)',
+                                              borderTop: 'none',
+                                              borderRadius: '0 0 10px 10px',
+                                              padding: '16px',
+                                              animation: 'slideDown 0.2s ease'
+                                            }}>
+                                              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '8px' }}>
+                                                <iframe
+                                                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                                                  src={`https://www.youtube.com/embed/${videoId}`}
+                                                  title={shot.tutorial_title || shot.name}
+                                                  frameBorder="0"
+                                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                  allowFullScreen
+                                                />
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
