@@ -636,7 +636,24 @@ function App() {
                                 justifyContent: 'center',
                                 fontSize: '20px'
                               }}>📦</div>
-                              <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#ffffff' }}>Training Pack Info</h3>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#ffffff' }}>Training Pack Info</h3>
+                                {currentPlan.rank_recommendation && (
+                                  <div style={{ 
+                                    background: 'rgba(16, 185, 129, 0.2)', 
+                                    border: '1px solid rgba(16, 185, 129, 0.4)',
+                                    borderRadius: '999px',
+                                    padding: '4px 10px',
+                                    fontSize: '10px',
+                                    color: '#10b981',
+                                    fontWeight: '600',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.5px'
+                                  }}>
+                                    {currentPlan.rank_recommendation}
+                                  </div>
+                                )}
+                              </div>
                             </div>
                             <div style={{ 
                               fontSize: '14px', 
@@ -989,24 +1006,38 @@ function App() {
                   
                   return (
                     <div key={plan.id} className="plan-card-new plan-library-card" style={{ '--plan-color': color }}>
-                      {isPreset && (
-                        <div style={{ 
-                          position: 'absolute', 
-                          top: '12px', 
-                          right: '12px', 
-                          background: 'rgba(88, 86, 214, 0.2)', 
-                          border: '1px solid rgba(88, 86, 214, 0.4)',
-                          borderRadius: '999px',
-                          padding: '4px 10px',
-                          fontSize: '10px',
-                          color: '#8b86d6',
-                          fontWeight: '600',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.5px'
-                        }}>
-                          Official
-                        </div>
-                      )}
+                      <div style={{ position: 'absolute', top: '12px', right: '12px', display: 'flex', gap: '6px', alignItems: 'center' }}>
+                        {plan.rank_recommendation && (
+                          <div style={{ 
+                            background: 'rgba(16, 185, 129, 0.2)', 
+                            border: '1px solid rgba(16, 185, 129, 0.4)',
+                            borderRadius: '999px',
+                            padding: '4px 10px',
+                            fontSize: '10px',
+                            color: '#10b981',
+                            fontWeight: '600',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px'
+                          }}>
+                            {plan.rank_recommendation}
+                          </div>
+                        )}
+                        {isPreset && (
+                          <div style={{ 
+                            background: 'rgba(88, 86, 214, 0.2)', 
+                            border: '1px solid rgba(88, 86, 214, 0.4)',
+                            borderRadius: '999px',
+                            padding: '4px 10px',
+                            fontSize: '10px',
+                            color: '#8b86d6',
+                            fontWeight: '600',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px'
+                          }}>
+                            Official
+                          </div>
+                        )}
+                      </div>
                       <div className="plan-card-title">{plan.name}</div>
                       {plan.description && <div className="plan-card-description">{plan.description}</div>}
                       <div className="plan-card-meta">
