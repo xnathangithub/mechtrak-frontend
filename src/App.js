@@ -1080,12 +1080,12 @@ function App() {
                         className="rank-image-container">
                           <img 
                             src={`/images/${
-                              plan.rank_recommendation.includes('SSL') ? 'ssl.png' :
+                              plan.rank_recommendation.includes('SSL') ? 'grandchampion.png' :
                               plan.rank_recommendation.includes('GC') ? 'grandchampion.png' :
                               plan.rank_recommendation.includes('Champ') ? 'champ.png' :
                               plan.rank_recommendation.includes('Plat') ? 'platinum.png' :
                               plan.rank_recommendation.includes('Diamond') ? 'diamond.png' :
-                              'ssl.png'
+                              'grandchampion.png'
                             }`}
                             alt={plan.rank_recommendation}
                             style={{ 
