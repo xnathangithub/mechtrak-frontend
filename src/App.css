@@ -1510,6 +1510,17 @@ body {
   100% { opacity: 1; }
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .connecting-checkmark {
   width: 80px;
   height: 80px;
