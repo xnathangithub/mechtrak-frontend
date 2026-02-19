@@ -473,8 +473,8 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.plan-card-new:hover img {
-  opacity: 0.5;
+.plan-card-new:hover .rank-image-container {
+  opacity: 0.4 !important;
 }
 
 .plan-card-title {
