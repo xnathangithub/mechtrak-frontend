@@ -1008,7 +1008,15 @@ function App() {
               ) : (
                 [...presetPlans, ...customPlans].map((plan, index) => {
                   const planColors = ['#a855f7', '#00d4ff', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
-                  const color = planColors[index % planColors.length];
+                  
+                  // Determine rank-based color for the top bar
+                  const rankColor = plan.rank_recommendation && plan.rank_recommendation.includes('GC') || plan.rank_recommendation && plan.rank_recommendation.includes('SSL') ? '#ef4444' :
+                                   plan.rank_recommendation && plan.rank_recommendation.includes('Champ') ? '#a855f7' :
+                                   plan.rank_recommendation && plan.rank_recommendation.includes('Diamond') ? '#3b82f6' :
+                                   plan.rank_recommendation && plan.rank_recommendation.includes('Plat') ? '#10b981' :
+                                   planColors[index % planColors.length];
+                  
+                  const color = rankColor;
                   const sessionCount = sessions.filter(s => s.plan_id === plan.id).length;
                   const lastUsed = sessions.filter(s => s.plan_id === plan.id).sort((a, b) => new Date(b.start_time) - new Date(a.start_time))[0];
                   const isPreset = plan.is_preset;
@@ -1066,9 +1074,10 @@ function App() {
                           left: '12px',
                           width: '48px',
                           height: '48px',
-                          opacity: 0.3,
+                          opacity: 0.15,
                           transition: 'opacity 0.3s ease'
-                        }}>
+                        }}
+                        className="rank-image-container">
                           <img 
                             src={`/images/${
                               plan.rank_recommendation.includes('SSL') ? 'ssl.png' :
