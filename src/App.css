@@ -477,13 +477,13 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .plan-card-description {
   font-size: 13px;
   color: #888;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   line-height: 1.5;
 }
 
@@ -515,15 +515,15 @@ body {
 .plan-shot-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 20px;
+  gap: 8px;
+  margin-bottom: 24px;
 }
 
 .plan-shot-pill {
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
-  padding: 4px 10px;
+  padding: 6px 12px;
   font-size: 11px;
   color: #aaa;
 }
