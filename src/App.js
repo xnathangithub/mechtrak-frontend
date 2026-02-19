@@ -597,93 +597,116 @@ function App() {
                     </div>
 
                     {/* Training Pack Info Section - only show for preset plans */}
-                    {selectedSession.plan_id && plans.find(p => p.id === selectedSession.plan_id)?.is_preset && (
-                      <div style={{
-                        background: 'rgba(255, 255, 255, 0.04)',
-                        backdropFilter: 'blur(20px)',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        borderRadius: '20px',
-                        padding: '28px',
-                        marginBottom: '30px',
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08)'
-                      }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-                          <div style={{
-                            width: '40px',
-                            height: '40px',
-                            background: 'rgba(168, 85, 247, 0.2)',
-                            border: '1px solid rgba(168, 85, 247, 0.4)',
-                            borderRadius: '10px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '20px'
-                          }}>📦</div>
-                          <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#ffffff' }}>Training Pack Info</h3>
-                        </div>
-
-                        {/* Recommended Training Pack */}
-                        <div style={{ 
-                          background: 'rgba(255, 255, 255, 0.03)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)',
-                          borderRadius: '12px',
-                          padding: '20px',
-                          marginBottom: '20px'
+                    {selectedSession.plan_id && (() => {
+                      const currentPlan = plans.find(p => p.id === selectedSession.plan_id);
+                      if (!currentPlan?.is_preset) return null;
+                      
+                      return (
+                        <div style={{
+                          background: 'rgba(255, 255, 255, 0.04)',
+                          backdropFilter: 'blur(20px)',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          borderRadius: '20px',
+                          padding: '28px',
+                          marginBottom: '30px',
+                          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08)'
                         }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                            <div>
-                              <div style={{ fontSize: '12px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>Recommended Pack</div>
-                              <div style={{ fontSize: '18px', fontWeight: '600', color: '#ffffff' }}>Reset Training Pack</div>
-                            </div>
-                            <button className="glossy-btn" style={{ padding: '8px 16px', fontSize: '13px' }}>
-                              Copy Code
-                            </button>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                            <div style={{
+                              width: '40px',
+                              height: '40px',
+                              background: 'rgba(168, 85, 247, 0.2)',
+                              border: '1px solid rgba(168, 85, 247, 0.4)',
+                              borderRadius: '10px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: '20px'
+                            }}>📦</div>
+                            <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#ffffff' }}>Training Pack Info</h3>
                           </div>
-                          <div style={{ 
-                            background: 'rgba(0, 0, 0, 0.3)',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
-                            borderRadius: '8px',
-                            padding: '12px 16px',
-                            fontFamily: 'monospace',
-                            fontSize: '14px',
-                            color: '#10b981',
-                            letterSpacing: '1px'
-                          }}>
-                            A5F3-4B2E-8C91-D6E7
-                          </div>
-                        </div>
 
-                        {/* Shot Tutorials */}
-                        <div>
-                          <div style={{ fontSize: '14px', color: '#888', marginBottom: '12px', fontWeight: '600' }}>Shot Tutorials</div>
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            {Object.entries(selectedSession.shots_data || {}).slice(0, 3).map(([shotNum, shot]) => (
-                              <div key={shotNum} style={{
-                                background: 'rgba(255, 255, 255, 0.03)',
-                                border: '1px solid rgba(255, 255, 255, 0.08)',
-                                borderRadius: '10px',
-                                padding: '14px 16px',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                transition: 'all 0.2s ease'
-                              }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                  <div style={{ fontSize: '16px' }}>🎥</div>
-                                  <div>
-                                    <div style={{ fontSize: '14px', fontWeight: '500', color: '#ffffff' }}>Shot {shotNum}: {shot.shotType || 'Tutorial'}</div>
-                                    <div style={{ fontSize: '12px', color: '#666' }}>Recommended tutorial video</div>
-                                  </div>
+                          {/* Recommended Training Pack */}
+                          {currentPlan.training_pack_code && (
+                            <div style={{ 
+                              background: 'rgba(255, 255, 255, 0.03)',
+                              border: '1px solid rgba(255, 255, 255, 0.1)',
+                              borderRadius: '12px',
+                              padding: '20px',
+                              marginBottom: '20px'
+                            }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                                <div>
+                                  <div style={{ fontSize: '12px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>Recommended Pack</div>
+                                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#ffffff' }}>{currentPlan.name}</div>
                                 </div>
-                                <button className="glossy-btn" style={{ padding: '6px 14px', fontSize: '12px' }}>
-                                  Watch
+                                <button 
+                                  className="glossy-btn" 
+                                  style={{ padding: '8px 16px', fontSize: '13px' }}
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(currentPlan.training_pack_code);
+                                    showToast('Training pack code copied!');
+                                  }}
+                                >
+                                  Copy Code
                                 </button>
                               </div>
-                            ))}
-                          </div>
+                              <div style={{ 
+                                background: 'rgba(0, 0, 0, 0.3)',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                borderRadius: '8px',
+                                padding: '12px 16px',
+                                fontFamily: 'monospace',
+                                fontSize: '14px',
+                                color: '#10b981',
+                                letterSpacing: '1px'
+                              }}>
+                                {currentPlan.training_pack_code}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Shot Tutorials */}
+                          {currentPlan.shots && currentPlan.shots.length > 0 && (
+                            <div>
+                              <div style={{ fontSize: '14px', color: '#888', marginBottom: '12px', fontWeight: '600' }}>Shot Tutorials</div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                {currentPlan.shots.map((shot, index) => {
+                                  if (!shot.tutorial_url) return null;
+                                  return (
+                                    <div key={index} style={{
+                                      background: 'rgba(255, 255, 255, 0.03)',
+                                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                                      borderRadius: '10px',
+                                      padding: '14px 16px',
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      transition: 'all 0.2s ease'
+                                    }}>
+                                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                        <div style={{ fontSize: '16px' }}>🎥</div>
+                                        <div>
+                                          <div style={{ fontSize: '14px', fontWeight: '500', color: '#ffffff' }}>Shot {index + 1}: {shot.name}</div>
+                                          <div style={{ fontSize: '12px', color: '#666' }}>{shot.tutorial_title || 'Tutorial video'}</div>
+                                        </div>
+                                      </div>
+                                      <button 
+                                        className="glossy-btn" 
+                                        style={{ padding: '6px 14px', fontSize: '12px' }}
+                                        onClick={() => window.open(shot.tutorial_url, '_blank')}
+                                      >
+                                        Watch
+                                      </button>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    )}
+                      );
+                    })()}
 
                     <h2 style={{ marginBottom: '20px', color: '#ffffff' }}>Shots</h2>
                     <div className="shot-cards-container">
