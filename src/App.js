@@ -1015,6 +1015,7 @@ function App() {
                   
                   return (
                     <div key={plan.id} className="plan-card-new plan-library-card" style={{ '--plan-color': color }}>
+                      {/* Rank badges in top right */}
                       <div style={{ position: 'absolute', top: '12px', right: '12px', display: 'flex', gap: '8px', alignItems: 'center' }}>
                         {plan.rank_recommendation && (
                           <div style={{ 
@@ -1056,6 +1057,39 @@ function App() {
                           </div>
                         )}
                       </div>
+
+                      {/* Rank image in top left */}
+                      {plan.rank_recommendation && (
+                        <div style={{ 
+                          position: 'absolute', 
+                          top: '12px', 
+                          left: '12px',
+                          width: '48px',
+                          height: '48px',
+                          opacity: 0.3,
+                          transition: 'opacity 0.3s ease'
+                        }}>
+                          <img 
+                            src={`/images/${
+                              plan.rank_recommendation.includes('SSL') ? 'ssl.png' :
+                              plan.rank_recommendation.includes('GC') ? 'grandchampion.png' :
+                              plan.rank_recommendation.includes('Champ') ? 'champ.png' :
+                              plan.rank_recommendation.includes('Plat') ? 'platinum.png' :
+                              plan.rank_recommendation.includes('Diamond') ? 'diamond.png' :
+                              'ssl.png'
+                            }`}
+                            alt={plan.rank_recommendation}
+                            style={{ 
+                              width: '100%', 
+                              height: '100%', 
+                              objectFit: 'contain',
+                              filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))'
+                            }}
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                          />
+                        </div>
+                      )}
+
                       <div className="plan-card-title" style={{ marginTop: '40px' }}>{plan.name}</div>
                       {plan.description && <div className="plan-card-description">{plan.description}</div>}
                       <div className="plan-card-meta">
