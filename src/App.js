@@ -636,16 +636,25 @@ function App() {
                                 justifyContent: 'center',
                                 fontSize: '20px'
                               }}>📦</div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                 <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#ffffff' }}>Training Pack Info</h3>
                                 {currentPlan.rank_recommendation && (
                                   <div style={{ 
-                                    background: 'rgba(16, 185, 129, 0.2)', 
-                                    border: '1px solid rgba(16, 185, 129, 0.4)',
+                                    background: currentPlan.rank_recommendation.includes('GC') || currentPlan.rank_recommendation.includes('SSL') ? 'rgba(239, 68, 68, 0.2)' :
+                                               currentPlan.rank_recommendation.includes('Champ') ? 'rgba(168, 85, 247, 0.2)' :
+                                               currentPlan.rank_recommendation.includes('Diamond') ? 'rgba(59, 130, 246, 0.2)' :
+                                               'rgba(16, 185, 129, 0.2)',
+                                    border: currentPlan.rank_recommendation.includes('GC') || currentPlan.rank_recommendation.includes('SSL') ? '1px solid rgba(239, 68, 68, 0.4)' :
+                                           currentPlan.rank_recommendation.includes('Champ') ? '1px solid rgba(168, 85, 247, 0.4)' :
+                                           currentPlan.rank_recommendation.includes('Diamond') ? '1px solid rgba(59, 130, 246, 0.4)' :
+                                           '1px solid rgba(16, 185, 129, 0.4)',
                                     borderRadius: '999px',
                                     padding: '4px 10px',
                                     fontSize: '10px',
-                                    color: '#10b981',
+                                    color: currentPlan.rank_recommendation.includes('GC') || currentPlan.rank_recommendation.includes('SSL') ? '#f87171' :
+                                          currentPlan.rank_recommendation.includes('Champ') ? '#a855f7' :
+                                          currentPlan.rank_recommendation.includes('Diamond') ? '#60a5fa' :
+                                          '#10b981',
                                     fontWeight: '600',
                                     textTransform: 'uppercase',
                                     letterSpacing: '0.5px'
@@ -1006,15 +1015,24 @@ function App() {
                   
                   return (
                     <div key={plan.id} className="plan-card-new plan-library-card" style={{ '--plan-color': color }}>
-                      <div style={{ position: 'absolute', top: '12px', right: '12px', display: 'flex', gap: '6px', alignItems: 'center' }}>
+                      <div style={{ position: 'absolute', top: '12px', right: '12px', display: 'flex', gap: '8px', alignItems: 'center' }}>
                         {plan.rank_recommendation && (
                           <div style={{ 
-                            background: 'rgba(16, 185, 129, 0.2)', 
-                            border: '1px solid rgba(16, 185, 129, 0.4)',
+                            background: plan.rank_recommendation.includes('GC') || plan.rank_recommendation.includes('SSL') ? 'rgba(239, 68, 68, 0.2)' :
+                                       plan.rank_recommendation.includes('Champ') ? 'rgba(168, 85, 247, 0.2)' :
+                                       plan.rank_recommendation.includes('Diamond') ? 'rgba(59, 130, 246, 0.2)' :
+                                       'rgba(16, 185, 129, 0.2)',
+                            border: plan.rank_recommendation.includes('GC') || plan.rank_recommendation.includes('SSL') ? '1px solid rgba(239, 68, 68, 0.4)' :
+                                   plan.rank_recommendation.includes('Champ') ? '1px solid rgba(168, 85, 247, 0.4)' :
+                                   plan.rank_recommendation.includes('Diamond') ? '1px solid rgba(59, 130, 246, 0.4)' :
+                                   '1px solid rgba(16, 185, 129, 0.4)',
                             borderRadius: '999px',
                             padding: '4px 10px',
                             fontSize: '10px',
-                            color: '#10b981',
+                            color: plan.rank_recommendation.includes('GC') || plan.rank_recommendation.includes('SSL') ? '#f87171' :
+                                  plan.rank_recommendation.includes('Champ') ? '#a855f7' :
+                                  plan.rank_recommendation.includes('Diamond') ? '#60a5fa' :
+                                  '#10b981',
                             fontWeight: '600',
                             textTransform: 'uppercase',
                             letterSpacing: '0.5px'
@@ -1038,7 +1056,7 @@ function App() {
                           </div>
                         )}
                       </div>
-                      <div className="plan-card-title">{plan.name}</div>
+                      <div className="plan-card-title" style={{ marginTop: '40px' }}>{plan.name}</div>
                       {plan.description && <div className="plan-card-description">{plan.description}</div>}
                       <div className="plan-card-meta">
                         <div className="plan-meta-item"><span className="plan-meta-label">Shots</span><span className="plan-meta-value">{plan.shots?.length || 0}</span></div>
