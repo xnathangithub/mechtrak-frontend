@@ -624,9 +624,9 @@ function App() {
             <div>
               <div style={{ padding: '30px 40px 0' }}>
                 <h1 style={{ fontSize: '36px', marginBottom: '8px' }}>Training Plans</h1>
-                <p style={{ color: '#888', fontSize: '14px' }}>Create and manage your custom training plans</p>
+                <p style={{ color: '#888', fontSize: '14px' }}>Create custom plans and browse pre-made training plans</p>
               </div>
-              <div className="plans-grid-new">
+              <div className="plans-grid-new" style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '30px 40px' }}>
 
                 {/* Free Train - Coming Soon */}
                 <div className="plan-create-card plan-coming-soon">
@@ -643,11 +643,11 @@ function App() {
                   <div className="plan-create-subtext">Build a custom training routine</div>
                 </div>
 
-                {/* Plan Library - opens modal with preset plans only */}
+                {/* Plan Library - opens modal with all plans */}
                 <div className="plan-create-card" onClick={() => setShowLibraryModal(true)}>
                   <div className="plan-create-icon">📚</div>
                   <div className="plan-create-text">Plan Library</div>
-                  <div className="plan-create-subtext">Browse pre-made training plans</div>
+                  <div className="plan-create-subtext">Browse all training plans</div>
                 </div>
               </div>
             </div>
@@ -779,47 +779,50 @@ function App() {
         </div>
       )}
 
-      {/* Plan Library Modal - shows ONLY preset plans */}
+      {/* Plan Library Modal - shows ALL plans (preset + custom) */}
       {showLibraryModal && (
         <div className="modal-overlay" onClick={() => setShowLibraryModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Plan Library</h2>
+              <h2>All Plans</h2>
               <button className="close-btn" onClick={() => setShowLibraryModal(false)}>✕</button>
             </div>
             
             <div className="plans-grid" style={{ padding: '30px' }}>
-              {presetPlans.length === 0 ? (
+              {[...presetPlans, ...customPlans].length === 0 ? (
                 <div style={{ padding: '40px', textAlign: 'center', color: '#888', gridColumn: '1 / -1' }}>
                   <div style={{ fontSize: '48px', marginBottom: '16px' }}>📚</div>
-                  <p style={{ fontSize: '18px', marginBottom: '10px' }}>No pre-made plans yet</p>
-                  <p style={{ fontSize: '14px' }}>Check back soon for official training plans!</p>
+                  <p style={{ fontSize: '18px', marginBottom: '10px' }}>No plans yet</p>
+                  <p style={{ fontSize: '14px' }}>Create your first training plan to get started!</p>
                 </div>
               ) : (
-                presetPlans.map((plan, index) => {
+                [...presetPlans, ...customPlans].map((plan, index) => {
                   const planColors = ['#a855f7', '#00d4ff', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
                   const color = planColors[index % planColors.length];
                   const sessionCount = sessions.filter(s => s.plan_id === plan.id).length;
                   const lastUsed = sessions.filter(s => s.plan_id === plan.id).sort((a, b) => new Date(b.start_time) - new Date(a.start_time))[0];
+                  const isPreset = plan.is_preset;
                   
                   return (
                     <div key={plan.id} className="plan-card-new plan-library-card" style={{ '--plan-color': color }}>
-                      <div style={{ 
-                        position: 'absolute', 
-                        top: '12px', 
-                        right: '12px', 
-                        background: 'rgba(88, 86, 214, 0.2)', 
-                        border: '1px solid rgba(88, 86, 214, 0.4)',
-                        borderRadius: '999px',
-                        padding: '4px 10px',
-                        fontSize: '10px',
-                        color: '#8b86d6',
-                        fontWeight: '600',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px'
-                      }}>
-                        Official
-                      </div>
+                      {isPreset && (
+                        <div style={{ 
+                          position: 'absolute', 
+                          top: '12px', 
+                          right: '12px', 
+                          background: 'rgba(88, 86, 214, 0.2)', 
+                          border: '1px solid rgba(88, 86, 214, 0.4)',
+                          borderRadius: '999px',
+                          padding: '4px 10px',
+                          fontSize: '10px',
+                          color: '#8b86d6',
+                          fontWeight: '600',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px'
+                        }}>
+                          Official
+                        </div>
+                      )}
                       <div className="plan-card-title">{plan.name}</div>
                       {plan.description && <div className="plan-card-description">{plan.description}</div>}
                       <div className="plan-card-meta">
@@ -834,6 +837,9 @@ function App() {
                         <button className="plan-use-btn" onClick={() => { startSessionWithPlan(plan.id); setShowLibraryModal(false); }} disabled={startingSession}>
                           {startingSession ? <span className="btn-spinner"></span> : 'Use Plan'}
                         </button>
+                        {!isPreset && (
+                          <button className="plan-delete-btn" onClick={() => deletePlan(plan.id)}>🗑️</button>
+                        )}
                       </div>
                     </div>
                   );
