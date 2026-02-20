@@ -832,51 +832,8 @@ function App() {
 
           {currentView === 'plans' && (
             <div style={{ position: 'relative', minHeight: 'calc(100vh - 81px)' }}>
-              {/* Video background with forward/reverse loop */}
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                overflow: 'hidden',
-                zIndex: 0
-              }}>
-                <video
-                  autoPlay
-                  muted
-                  playsInline
-                  onEnded={(e) => {
-                    // Reverse the playback direction when video ends
-                    const video = e.target;
-                    if (video.playbackRate > 0) {
-                      video.playbackRate = -1;
-                      video.currentTime = video.duration;
-                    } else {
-                      video.playbackRate = 1;
-                      video.currentTime = 0;
-                    }
-                    video.play();
-                  }}
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    minWidth: '100%',
-                    minHeight: '100%',
-                    width: 'auto',
-                    height: 'auto',
-                    transform: 'translate(-50%, -50%)',
-                    objectFit: 'cover',
-                    opacity: 0.15, // Very subtle - adjust 0.1-0.3 based on how it looks
-                    filter: 'blur(0px)' // Add blur(5px) if too distracting
-                  }}
-                >
-                  <source src="/neonbg.mp4" type="video/mp4" />
-                </video>
-              </div>
-
-              {/* Optional: Gradient overlay to help cards stand out */}
+              
+              {/* Optional: Gradient overlay */}
               <div style={{
                 position: 'absolute',
                 top: 0,
@@ -894,6 +851,78 @@ function App() {
                   <p style={{ color: '#888', fontSize: '14px' }}>Create custom plans and browse pre-made training plans</p>
                 </div>
                 <div className="plans-grid-new" style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '30px 40px' }}>
+
+                  {/* Free Train - Coming Soon */}
+                  <div className="plan-create-card plan-coming-soon">
+                    <div className="plan-create-icon">⚡</div>
+                    <div className="plan-create-text">Free Train</div>
+                    <div className="plan-create-subtext">Train freely without a plan</div>
+                    <div className="coming-soon-badge">Coming Soon</div>
+                  </div>
+
+                  {/* Create New Plan */}
+                  <div className="plan-create-card" onClick={() => setShowCreatePlan(true)}>
+                    <div className="plan-create-icon">+</div>
+                    <div className="plan-create-text">Create New Plan</div>
+                    <div className="plan-create-subtext">Build a custom training routine</div>
+                  </div>
+
+                  {/* Plan Library - opens modal with all plans */}
+                  <div className="plan-create-card" onClick={() => setShowLibraryModal(true)}>
+                    <div className="plan-create-icon">📚</div>
+                    <div className="plan-create-text">Plan Library</div>
+                    <div className="plan-create-subtext">Browse all training plans</div>
+                  </div>
+                </div>
+
+                {/* Video background box centered under buttons */}
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  padding: '0 40px 40px'
+                }}>
+                  <div style={{
+                    width: '700px',
+                    height: '400px',
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    position: 'relative'
+                  }}>
+                    <video
+                      autoPlay
+                      muted
+                      playsInline
+                      ref={(video) => {
+                        if (video) {
+                          let direction = 1;
+                          video.playbackRate = 0.5;
+                          
+                          video.addEventListener('ended', function() {
+                            direction = -direction;
+                            if (direction === 1) {
+                              this.currentTime = 0;
+                              this.playbackRate = 0.5;
+                            } else {
+                              this.currentTime = this.duration;
+                              this.playbackRate = -0.5;
+                            }
+                            this.play();
+                          });
+                        }
+                      }}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        opacity: 0.6
+                      }}
+                    >
+                      <source src="/neonbg.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                </div>
 
                 {/* Free Train - Coming Soon */}
                 <div className="plan-create-card plan-coming-soon">
@@ -917,7 +946,6 @@ function App() {
                   <div className="plan-create-subtext">Browse all training plans</div>
                 </div>
               </div>
-            </div>
             </div>
           )}
 
