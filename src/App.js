@@ -21,7 +21,7 @@ function App() {
   const [showSessionSelector, setShowSessionSelector] = useState(false);
   const [availableSessions, setAvailableSessions] = useState([]);
   const [statsChartType, setStatsChartType] = useState('line');
-  const [statsChartMode, setStatsChartMode] = useState('overview');
+  const [statsChartMode, setStatsChartMode] = useState('breakdown');
   const [expandedTutorial, setExpandedTutorial] = useState(null);
   const [showTrainingPackInfo, setShowTrainingPackInfo] = useState(true);
   const [user, setUser] = useState(null);
