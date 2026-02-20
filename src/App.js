@@ -831,12 +831,48 @@ function App() {
           )}
 
           {currentView === 'plans' && (
-            <div>
-              <div style={{ padding: '30px 40px 0' }}>
-                <h1 style={{ fontSize: '36px', marginBottom: '8px' }}>Training Plans</h1>
-                <p style={{ color: '#888', fontSize: '14px' }}>Create custom plans and browse pre-made training plans</p>
-              </div>
-              <div className="plans-grid-new" style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '30px 40px' }}>
+            <div style={{ position: 'relative', minHeight: 'calc(100vh - 81px)' }}>
+              {/* Topographic background with session-based pulsing */}
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundImage: `
+                  repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255, 255, 255, 0.03) 50px, rgba(255, 255, 255, 0.03) 51px),
+                  repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255, 255, 255, 0.03) 50px, rgba(255, 255, 255, 0.03) 51px),
+                  repeating-linear-gradient(45deg, transparent, transparent 70px, rgba(255, 255, 255, 0.02) 70px, rgba(255, 255, 255, 0.02) 71px),
+                  repeating-linear-gradient(-45deg, transparent, transparent 70px, rgba(255, 255, 255, 0.02) 70px, rgba(255, 255, 255, 0.02) 71px)
+                `,
+                opacity: 0.5,
+                pointerEvents: 'none',
+                zIndex: 0
+              }} />
+              
+              {/* Session status glow */}
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '800px',
+                height: '800px',
+                borderRadius: '50%',
+                background: sessions.some(s => s.status === 'active') 
+                  ? 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)'
+                  : 'radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%)',
+                animation: sessions.some(s => s.status === 'active') ? 'pulseGreen 3s ease-in-out infinite' : 'pulseRed 3s ease-in-out infinite',
+                pointerEvents: 'none',
+                zIndex: 0
+              }} />
+              
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{ padding: '30px 40px 0' }}>
+                  <h1 style={{ fontSize: '36px', marginBottom: '8px' }}>Training Plans</h1>
+                  <p style={{ color: '#888', fontSize: '14px' }}>Create custom plans and browse pre-made training plans</p>
+                </div>
+                <div className="plans-grid-new" style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '30px 40px' }}>
 
                 {/* Free Train - Coming Soon */}
                 <div className="plan-create-card plan-coming-soon">
