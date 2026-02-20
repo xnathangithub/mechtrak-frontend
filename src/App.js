@@ -1023,33 +1023,51 @@ function App() {
       {/* Create Custom Plan Modal - opens directly to form */}
       {showCreatePlan && (
         <>
-          {/* Explosion particles */}
+          {/* Rank particles - more condensed explosion */}
           <div className="explosion-particle particle-1">
-            <img src="/images/ssl.png" alt="rank" style={{ width: '60px', height: '60px', opacity: 0.8 }} />
+            <img src="/images/ssl.png" alt="rank" style={{ width: '50px', height: '50px', opacity: 0.9 }} />
           </div>
           <div className="explosion-particle particle-2">
-            <img src="/images/grandchampion.png" alt="rank" style={{ width: '70px', height: '70px', opacity: 0.8 }} />
+            <img src="/images/grandchampion.png" alt="rank" style={{ width: '55px', height: '55px', opacity: 0.9 }} />
           </div>
           <div className="explosion-particle particle-3">
-            <img src="/images/champ.png" alt="rank" style={{ width: '65px', height: '65px', opacity: 0.8 }} />
+            <img src="/images/champ.png" alt="rank" style={{ width: '50px', height: '50px', opacity: 0.9 }} />
           </div>
           <div className="explosion-particle particle-4">
-            <img src="/images/diamond.png" alt="rank" style={{ width: '55px', height: '55px', opacity: 0.8 }} />
+            <img src="/images/diamond.png" alt="rank" style={{ width: '45px', height: '45px', opacity: 0.9 }} />
           </div>
           <div className="explosion-particle particle-5">
-            <img src="/images/platinum.png" alt="rank" style={{ width: '60px', height: '60px', opacity: 0.8 }} />
+            <img src="/images/platinum.png" alt="rank" style={{ width: '50px', height: '50px', opacity: 0.9 }} />
+          </div>
+          <div className="explosion-particle particle-6">
+            <img src="/images/champ.png" alt="rank" style={{ width: '48px', height: '48px', opacity: 0.8 }} />
+          </div>
+          <div className="explosion-particle particle-7">
+            <img src="/images/diamond.png" alt="rank" style={{ width: '52px', height: '52px', opacity: 0.85 }} />
+          </div>
+          <div className="explosion-particle particle-8">
+            <img src="/images/grandchampion.png" alt="rank" style={{ width: '48px', height: '48px', opacity: 0.85 }} />
           </div>
           
-          {/* Sparkle particles */}
+          {/* Sparkle particles - more of them */}
           <div className="sparkle-particle sparkle-1">✨</div>
           <div className="sparkle-particle sparkle-2">⚡</div>
           <div className="sparkle-particle sparkle-3">🌟</div>
           <div className="sparkle-particle sparkle-4">✨</div>
           <div className="sparkle-particle sparkle-5">⭐</div>
           <div className="sparkle-particle sparkle-6">💫</div>
+          <div className="sparkle-particle sparkle-7">✨</div>
+          <div className="sparkle-particle sparkle-8">⚡</div>
+          <div className="sparkle-particle sparkle-9">🌟</div>
+          <div className="sparkle-particle sparkle-10">⭐</div>
+          
+          {/* Ring explosion effect */}
+          <div className="ring-particle ring-1"></div>
+          <div className="ring-particle ring-2"></div>
+          <div className="ring-particle ring-3"></div>
 
-          <div className="modal-overlay" onClick={() => setShowCreatePlan(false)}>
-            <div className="modal-content modal-content-animated" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-overlay modal-overlay-delayed" onClick={() => setShowCreatePlan(false)}>
+            <div className="modal-content modal-content-animated-delayed" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2>Create Custom Plan</h2>
               <button className="close-btn" onClick={() => setShowCreatePlan(false)}>✕</button>
