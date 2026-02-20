@@ -831,18 +831,71 @@ function App() {
           )}
 
           {currentView === 'plans' && (
-            <div style={{ position: 'relative', minHeight: 'calc(100vh - 81px)' }}>
+            <div style={{ position: 'relative', minHeight: 'calc(100vh - 81px)', overflow: 'hidden' }}>
               
-              {/* Optional: Gradient overlay */}
+              {/* Gradient Overlay with Radial Glows */}
               <div style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.3) 100%)',
+                background: `
+                  radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.08), transparent 50%),
+                  radial-gradient(circle at 80% 30%, rgba(16, 185, 129, 0.08), transparent 50%),
+                  radial-gradient(circle at 50% 80%, rgba(239, 68, 68, 0.08), transparent 50%)
+                `,
                 pointerEvents: 'none',
-                zIndex: 1
+                zIndex: 0
+              }} />
+
+              {/* Floating Orbs */}
+              <div className="floating-orb floating-orb-1" style={{
+                position: 'absolute',
+                width: '400px',
+                height: '400px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent 70%)',
+                filter: 'blur(80px)',
+                animation: 'float1 20s ease-in-out infinite',
+                zIndex: 0,
+                pointerEvents: 'none'
+              }} />
+              
+              <div className="floating-orb floating-orb-2" style={{
+                position: 'absolute',
+                width: '350px',
+                height: '350px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(59, 130, 246, 0.25), transparent 70%)',
+                filter: 'blur(70px)',
+                animation: 'float2 25s ease-in-out infinite',
+                zIndex: 0,
+                pointerEvents: 'none'
+              }} />
+              
+              <div className="floating-orb floating-orb-3" style={{
+                position: 'absolute',
+                width: '300px',
+                height: '300px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(16, 185, 129, 0.3), transparent 70%)',
+                filter: 'blur(60px)',
+                animation: 'float3 18s ease-in-out infinite',
+                zIndex: 0,
+                pointerEvents: 'none'
+              }} />
+              
+              <div className="floating-orb floating-orb-4" style={{
+                position: 'absolute',
+                width: '320px',
+                height: '320px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(239, 68, 68, 0.25), transparent 70%)',
+                filter: 'blur(75px)',
+                animation: 'float4 22s ease-in-out infinite',
+                zIndex: 0,
+                pointerEvents: 'none'
               }} />
               
               <div style={{ position: 'relative', zIndex: 2 }}>
@@ -851,78 +904,6 @@ function App() {
                   <p style={{ color: '#888', fontSize: '14px' }}>Create custom plans and browse pre-made training plans</p>
                 </div>
                 <div className="plans-grid-new" style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '30px 40px' }}>
-
-                  {/* Free Train - Coming Soon */}
-                  <div className="plan-create-card plan-coming-soon">
-                    <div className="plan-create-icon">⚡</div>
-                    <div className="plan-create-text">Free Train</div>
-                    <div className="plan-create-subtext">Train freely without a plan</div>
-                    <div className="coming-soon-badge">Coming Soon</div>
-                  </div>
-
-                  {/* Create New Plan */}
-                  <div className="plan-create-card" onClick={() => setShowCreatePlan(true)}>
-                    <div className="plan-create-icon">+</div>
-                    <div className="plan-create-text">Create New Plan</div>
-                    <div className="plan-create-subtext">Build a custom training routine</div>
-                  </div>
-
-                  {/* Plan Library - opens modal with all plans */}
-                  <div className="plan-create-card" onClick={() => setShowLibraryModal(true)}>
-                    <div className="plan-create-icon">📚</div>
-                    <div className="plan-create-text">Plan Library</div>
-                    <div className="plan-create-subtext">Browse all training plans</div>
-                  </div>
-                </div>
-
-                {/* Video background box centered under buttons */}
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'center', 
-                  padding: '0 40px 40px'
-                }}>
-                  <div style={{
-                    width: '700px',
-                    height: '400px',
-                    borderRadius: '20px',
-                    overflow: 'hidden',
-                    background: 'rgba(255, 255, 255, 0.02)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    position: 'relative'
-                  }}>
-                    <video
-                      autoPlay
-                      muted
-                      playsInline
-                      ref={(video) => {
-                        if (video) {
-                          let direction = 1;
-                          video.playbackRate = 0.5;
-                          
-                          video.addEventListener('ended', function() {
-                            direction = -direction;
-                            if (direction === 1) {
-                              this.currentTime = 0;
-                              this.playbackRate = 0.5;
-                            } else {
-                              this.currentTime = this.duration;
-                              this.playbackRate = -0.5;
-                            }
-                            this.play();
-                          });
-                        }
-                      }}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        opacity: 0.6
-                      }}
-                    >
-                      <source src="/neonbg.mp4" type="video/mp4" />
-                    </video>
-                  </div>
-                </div>
 
                 {/* Free Train - Coming Soon */}
                 <div className="plan-create-card plan-coming-soon">
