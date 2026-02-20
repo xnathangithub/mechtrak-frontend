@@ -928,6 +928,7 @@ function App() {
                 </div>
               </div>
             </div>
+            </div>
           )}
 
           {currentView === 'stats' && (
