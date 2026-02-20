@@ -535,7 +535,7 @@ function App() {
                         <div style={{ fontSize: '48px', marginBottom: '20px' }}>🎯</div>
                         <p style={{ fontSize: '18px', marginBottom: '10px' }}>No sessions yet!</p>
                         <p style={{ fontSize: '14px' }}>Start a training session to see your stats here</p>
-                        <button className="glossy-btn" style={{ marginTop: '20px' }} onClick={() => setCurrentView('home')}>Start Training</button>
+                        <button className="glossy-btn" style={{ marginTop: '20px' }} onClick={() => setCurrentView('plans')}>Start Training</button>
                       </div>
                     ) : (
                       <div>
