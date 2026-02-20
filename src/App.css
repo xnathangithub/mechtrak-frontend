@@ -1562,23 +1562,72 @@ body {
 
 @keyframes pulseGreen {
   0%, 100% {
-    opacity: 0.15;
+    opacity: 0.6;
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
-    opacity: 0.25;
-    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
   }
 }
 
 @keyframes pulseRed {
   0%, 100% {
-    opacity: 0.1;
+    opacity: 0.5;
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
-    opacity: 0.2;
-    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Floating Orb Animations */
+@keyframes float1 {
+  0%, 100% {
+    transform: translate(10%, 20%);
+  }
+  25% {
+    transform: translate(15%, 60%);
+  }
+  50% {
+    transform: translate(80%, 50%);
+  }
+  75% {
+    transform: translate(70%, 10%);
+  }
+}
+
+@keyframes float2 {
+  0%, 100% {
+    transform: translate(85%, 70%);
+  }
+  33% {
+    transform: translate(20%, 80%);
+  }
+  66% {
+    transform: translate(40%, 20%);
+  }
+}
+
+@keyframes float3 {
+  0%, 100% {
+    transform: translate(50%, 90%);
+  }
+  50% {
+    transform: translate(30%, 30%);
+  }
+}
+
+@keyframes float4 {
+  0%, 100% {
+    transform: translate(75%, 15%);
+  }
+  33% {
+    transform: translate(15%, 40%);
+  }
+  66% {
+    transform: translate(60%, 75%);
   }
 }
 
