@@ -832,43 +832,63 @@ function App() {
 
           {currentView === 'plans' && (
             <div style={{ position: 'relative', minHeight: 'calc(100vh - 81px)' }}>
-              {/* Topographic background with session-based pulsing */}
+              {/* Video background with forward/reverse loop */}
               <div style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundImage: `
-                  repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255, 255, 255, 0.06) 40px, rgba(255, 255, 255, 0.06) 41px),
-                  repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255, 255, 255, 0.06) 40px, rgba(255, 255, 255, 0.06) 41px),
-                  repeating-linear-gradient(45deg, transparent, transparent 80px, rgba(255, 255, 255, 0.04) 80px, rgba(255, 255, 255, 0.04) 81px),
-                  repeating-linear-gradient(-45deg, transparent, transparent 80px, rgba(255, 255, 255, 0.04) 80px, rgba(255, 255, 255, 0.04) 81px)
-                `,
-                opacity: 0.8,
-                pointerEvents: 'none',
+                overflow: 'hidden',
                 zIndex: 0
-              }} />
-              
-              {/* Session status glow */}
+              }}>
+                <video
+                  autoPlay
+                  muted
+                  playsInline
+                  onEnded={(e) => {
+                    // Reverse the playback direction when video ends
+                    const video = e.target;
+                    if (video.playbackRate > 0) {
+                      video.playbackRate = -1;
+                      video.currentTime = video.duration;
+                    } else {
+                      video.playbackRate = 1;
+                      video.currentTime = 0;
+                    }
+                    video.play();
+                  }}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    minWidth: '100%',
+                    minHeight: '100%',
+                    width: 'auto',
+                    height: 'auto',
+                    transform: 'translate(-50%, -50%)',
+                    objectFit: 'cover',
+                    opacity: 0.15, // Very subtle - adjust 0.1-0.3 based on how it looks
+                    filter: 'blur(0px)' // Add blur(5px) if too distracting
+                  }}
+                >
+                  <source src="/neonbg.mp4" type="video/mp4" />
+                </video>
+              </div>
+
+              {/* Optional: Gradient overlay to help cards stand out */}
               <div style={{
                 position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '1200px',
-                height: '1200px',
-                borderRadius: '50%',
-                background: sessions.some(s => s.status === 'active') 
-                  ? 'radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 60%)'
-                  : 'radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 60%)',
-                animation: sessions.some(s => s.status === 'active') ? 'pulseGreen 3s ease-in-out infinite' : 'pulseRed 3s ease-in-out infinite',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.3) 100%)',
                 pointerEvents: 'none',
-                zIndex: 0,
-                filter: 'blur(60px)'
+                zIndex: 1
               }} />
               
-              <div style={{ position: 'relative', zIndex: 1 }}>
+              <div style={{ position: 'relative', zIndex: 2 }}>
                 <div style={{ padding: '30px 40px 0' }}>
                   <h1 style={{ fontSize: '36px', marginBottom: '8px' }}>Training Plans</h1>
                   <p style={{ color: '#888', fontSize: '14px' }}>Create custom plans and browse pre-made training plans</p>
