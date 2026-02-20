@@ -1631,6 +1631,232 @@ body {
   }
 }
 
+/* Explosion Animations */
+.explosion-particle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 10000;
+  pointer-events: none;
+  animation: explode 1.2s ease-out forwards;
+}
+
+.sparkle-particle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 10001;
+  pointer-events: none;
+  font-size: 24px;
+  animation: sparkleExplode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sparkleExplode {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.particle-1 {
+  animation: explode1 1.2s ease-out forwards;
+}
+
+.particle-2 {
+  animation: explode2 1.2s ease-out forwards;
+}
+
+.particle-3 {
+  animation: explode3 1.2s ease-out forwards;
+}
+
+.particle-4 {
+  animation: explode4 1.2s ease-out forwards;
+}
+
+.particle-5 {
+  animation: explode5 1.2s ease-out forwards;
+}
+
+@keyframes explode1 {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% - 300px), calc(-50% - 250px)) scale(1) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes explode2 {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + 350px), calc(-50% - 200px)) scale(1.2) rotate(-360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes explode3 {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% - 250px), calc(-50% + 280px)) scale(1.1) rotate(270deg);
+    opacity: 0;
+  }
+}
+
+@keyframes explode4 {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + 320px), calc(-50% + 240px)) scale(0.9) rotate(-270deg);
+    opacity: 0;
+  }
+}
+
+@keyframes explode5 {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% - 100px), calc(-50% - 320px)) scale(1) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+.sparkle-1 {
+  animation: sparkle1 1s ease-out forwards;
+}
+
+.sparkle-2 {
+  animation: sparkle2 0.9s ease-out forwards;
+}
+
+.sparkle-3 {
+  animation: sparkle3 1.1s ease-out forwards;
+}
+
+.sparkle-4 {
+  animation: sparkle4 1s ease-out forwards;
+}
+
+.sparkle-5 {
+  animation: sparkle5 0.95s ease-out forwards;
+}
+
+.sparkle-6 {
+  animation: sparkle6 1.05s ease-out forwards;
+}
+
+@keyframes sparkle1 {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% - 200px), calc(-50% - 150px)) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkle2 {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + 220px), calc(-50% - 180px)) scale(1.3);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkle3 {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% - 180px), calc(-50% + 200px)) scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkle4 {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + 240px), calc(-50% + 170px)) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkle5 {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + 50px), calc(-50% - 250px)) scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkle6 {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% - 240px), calc(-50% + 50px)) scale(1.3);
+    opacity: 0;
+  }
+}
+
+.modal-content-animated {
+  animation: modalPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes modalPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .connecting-checkmark {
   width: 80px;
   height: 80px;
