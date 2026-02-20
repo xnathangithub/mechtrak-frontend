@@ -840,12 +840,12 @@ function App() {
                 right: 0,
                 bottom: 0,
                 backgroundImage: `
-                  repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255, 255, 255, 0.03) 50px, rgba(255, 255, 255, 0.03) 51px),
-                  repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255, 255, 255, 0.03) 50px, rgba(255, 255, 255, 0.03) 51px),
-                  repeating-linear-gradient(45deg, transparent, transparent 70px, rgba(255, 255, 255, 0.02) 70px, rgba(255, 255, 255, 0.02) 71px),
-                  repeating-linear-gradient(-45deg, transparent, transparent 70px, rgba(255, 255, 255, 0.02) 70px, rgba(255, 255, 255, 0.02) 71px)
+                  repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255, 255, 255, 0.06) 40px, rgba(255, 255, 255, 0.06) 41px),
+                  repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255, 255, 255, 0.06) 40px, rgba(255, 255, 255, 0.06) 41px),
+                  repeating-linear-gradient(45deg, transparent, transparent 80px, rgba(255, 255, 255, 0.04) 80px, rgba(255, 255, 255, 0.04) 81px),
+                  repeating-linear-gradient(-45deg, transparent, transparent 80px, rgba(255, 255, 255, 0.04) 80px, rgba(255, 255, 255, 0.04) 81px)
                 `,
-                opacity: 0.5,
+                opacity: 0.8,
                 pointerEvents: 'none',
                 zIndex: 0
               }} />
