@@ -1188,6 +1188,45 @@ function App() {
                   </ol>
                 </div>
               </details>
+              
+              <details className="faq-item">
+                <summary className="faq-question">Where can I find the source code?</summary>
+                <div className="faq-answer">
+                  <p>MechTrak is open source! You can view the code, contribute, or report issues on GitHub:</p>
+                  <div style={{ marginTop: '15px' }}>
+                    <a 
+                      href="https://github.com/xnathangithub/MechTrak" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      style={{ 
+                        color: '#10b981', 
+                        textDecoration: 'none',
+                        fontSize: '15px',
+                        fontWeight: '600',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '10px 16px',
+                        background: 'rgba(16, 185, 129, 0.1)',
+                        border: '1px solid rgba(16, 185, 129, 0.3)',
+                        borderRadius: '8px',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.background = 'rgba(16, 185, 129, 0.15)';
+                        e.target.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.background = 'rgba(16, 185, 129, 0.1)';
+                        e.target.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                      }}
+                    >
+                      <span>🔗</span>
+                      github.com/xnathangithub/MechTrak
+                    </a>
+                  </div>
+                </div>
+              </details>
             </div>
           </div>
         </div>
