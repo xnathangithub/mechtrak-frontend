@@ -856,15 +856,16 @@ function App() {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '800px',
-                height: '800px',
+                width: '1200px',
+                height: '1200px',
                 borderRadius: '50%',
                 background: sessions.some(s => s.status === 'active') 
-                  ? 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)'
-                  : 'radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%)',
+                  ? 'radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 60%)'
+                  : 'radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 60%)',
                 animation: sessions.some(s => s.status === 'active') ? 'pulseGreen 3s ease-in-out infinite' : 'pulseRed 3s ease-in-out infinite',
                 pointerEvents: 'none',
-                zIndex: 0
+                zIndex: 0,
+                filter: 'blur(60px)'
               }} />
               
               <div style={{ position: 'relative', zIndex: 1 }}>
