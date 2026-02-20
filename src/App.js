@@ -1023,7 +1023,7 @@ function App() {
       {/* Create Custom Plan Modal - opens directly to form */}
       {showCreatePlan && (
         <>
-          {/* Rank particles - more condensed explosion */}
+          {/* Rank particles - tripled and positioned around modal border */}
           <div className="explosion-particle particle-1">
             <img src="/images/ssl.png" alt="rank" style={{ width: '50px', height: '50px', opacity: 0.9 }} />
           </div>
@@ -1048,8 +1048,56 @@ function App() {
           <div className="explosion-particle particle-8">
             <img src="/images/grandchampion.png" alt="rank" style={{ width: '48px', height: '48px', opacity: 0.85 }} />
           </div>
+          <div className="explosion-particle particle-9">
+            <img src="/images/ssl.png" alt="rank" style={{ width: '46px', height: '46px', opacity: 0.9 }} />
+          </div>
+          <div className="explosion-particle particle-10">
+            <img src="/images/champ.png" alt="rank" style={{ width: '50px', height: '50px', opacity: 0.85 }} />
+          </div>
+          <div className="explosion-particle particle-11">
+            <img src="/images/platinum.png" alt="rank" style={{ width: '47px', height: '47px', opacity: 0.9 }} />
+          </div>
+          <div className="explosion-particle particle-12">
+            <img src="/images/diamond.png" alt="rank" style={{ width: '49px', height: '49px', opacity: 0.85 }} />
+          </div>
+          <div className="explosion-particle particle-13">
+            <img src="/images/grandchampion.png" alt="rank" style={{ width: '51px', height: '51px', opacity: 0.9 }} />
+          </div>
+          <div className="explosion-particle particle-14">
+            <img src="/images/ssl.png" alt="rank" style={{ width: '48px', height: '48px', opacity: 0.85 }} />
+          </div>
+          <div className="explosion-particle particle-15">
+            <img src="/images/champ.png" alt="rank" style={{ width: '50px', height: '50px', opacity: 0.9 }} />
+          </div>
+          <div className="explosion-particle particle-16">
+            <img src="/images/platinum.png" alt="rank" style={{ width: '46px', height: '46px', opacity: 0.85 }} />
+          </div>
+          <div className="explosion-particle particle-17">
+            <img src="/images/diamond.png" alt="rank" style={{ width: '52px', height: '52px', opacity: 0.9 }} />
+          </div>
+          <div className="explosion-particle particle-18">
+            <img src="/images/grandchampion.png" alt="rank" style={{ width: '49px', height: '49px', opacity: 0.85 }} />
+          </div>
+          <div className="explosion-particle particle-19">
+            <img src="/images/ssl.png" alt="rank" style={{ width: '47px', height: '47px', opacity: 0.9 }} />
+          </div>
+          <div className="explosion-particle particle-20">
+            <img src="/images/champ.png" alt="rank" style={{ width: '51px', height: '51px', opacity: 0.85 }} />
+          </div>
+          <div className="explosion-particle particle-21">
+            <img src="/images/platinum.png" alt="rank" style={{ width: '48px', height: '48px', opacity: 0.9 }} />
+          </div>
+          <div className="explosion-particle particle-22">
+            <img src="/images/diamond.png" alt="rank" style={{ width: '50px', height: '50px', opacity: 0.85 }} />
+          </div>
+          <div className="explosion-particle particle-23">
+            <img src="/images/grandchampion.png" alt="rank" style={{ width: '46px', height: '46px', opacity: 0.9 }} />
+          </div>
+          <div className="explosion-particle particle-24">
+            <img src="/images/ssl.png" alt="rank" style={{ width: '52px', height: '52px', opacity: 0.85 }} />
+          </div>
           
-          {/* Sparkle particles - more of them */}
+          {/* Sparkle particles - tripled */}
           <div className="sparkle-particle sparkle-1">✨</div>
           <div className="sparkle-particle sparkle-2">⚡</div>
           <div className="sparkle-particle sparkle-3">🌟</div>
@@ -1060,11 +1108,26 @@ function App() {
           <div className="sparkle-particle sparkle-8">⚡</div>
           <div className="sparkle-particle sparkle-9">🌟</div>
           <div className="sparkle-particle sparkle-10">⭐</div>
-          
-          {/* Ring explosion effect */}
-          <div className="ring-particle ring-1"></div>
-          <div className="ring-particle ring-2"></div>
-          <div className="ring-particle ring-3"></div>
+          <div className="sparkle-particle sparkle-11">💫</div>
+          <div className="sparkle-particle sparkle-12">✨</div>
+          <div className="sparkle-particle sparkle-13">⚡</div>
+          <div className="sparkle-particle sparkle-14">🌟</div>
+          <div className="sparkle-particle sparkle-15">✨</div>
+          <div className="sparkle-particle sparkle-16">⭐</div>
+          <div className="sparkle-particle sparkle-17">💫</div>
+          <div className="sparkle-particle sparkle-18">✨</div>
+          <div className="sparkle-particle sparkle-19">⚡</div>
+          <div className="sparkle-particle sparkle-20">🌟</div>
+          <div className="sparkle-particle sparkle-21">⭐</div>
+          <div className="sparkle-particle sparkle-22">💫</div>
+          <div className="sparkle-particle sparkle-23">✨</div>
+          <div className="sparkle-particle sparkle-24">⚡</div>
+          <div className="sparkle-particle sparkle-25">🌟</div>
+          <div className="sparkle-particle sparkle-26">✨</div>
+          <div className="sparkle-particle sparkle-27">⭐</div>
+          <div className="sparkle-particle sparkle-28">💫</div>
+          <div className="sparkle-particle sparkle-29">✨</div>
+          <div className="sparkle-particle sparkle-30">⚡</div>
 
           <div className="modal-overlay modal-overlay-delayed" onClick={() => setShowCreatePlan(false)}>
             <div className="modal-content modal-content-animated-delayed" onClick={(e) => e.stopPropagation()}>
