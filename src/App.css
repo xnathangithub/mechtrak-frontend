@@ -1640,6 +1640,10 @@ body {
    Replace the explosion section in App.css with this */
 
 /* Explosion Animations - Very tight, quick, bright */
+/* EXPLOSION - ROUNDED RECTANGLE BUTTON SHAPE
+   Replace explosion section in App.css with this */
+
+/* Explosion particles positioned around button's rounded rectangle border */
 .explosion-particle {
   position: fixed;
   top: 50%;
@@ -1659,122 +1663,139 @@ body {
   filter: brightness(1.8) drop-shadow(0 0 12px rgba(255, 255, 255, 1));
 }
 
-/* 24 Rank particles - tight 150px radius circle, 0.4s duration */
-.particle-1 { animation: explodeOut1 0.4s ease-out forwards; }
-.particle-2 { animation: explodeOut2 0.4s ease-out forwards; }
-.particle-3 { animation: explodeOut3 0.4s ease-out forwards; }
-.particle-4 { animation: explodeOut4 0.4s ease-out forwards; }
-.particle-5 { animation: explodeOut5 0.4s ease-out forwards; }
-.particle-6 { animation: explodeOut6 0.4s ease-out forwards; }
-.particle-7 { animation: explodeOut7 0.4s ease-out forwards; }
-.particle-8 { animation: explodeOut8 0.4s ease-out forwards; }
-.particle-9 { animation: explodeOut9 0.4s ease-out forwards; }
-.particle-10 { animation: explodeOut10 0.4s ease-out forwards; }
-.particle-11 { animation: explodeOut11 0.4s ease-out forwards; }
-.particle-12 { animation: explodeOut12 0.4s ease-out forwards; }
-.particle-13 { animation: explodeOut13 0.4s ease-out forwards; }
-.particle-14 { animation: explodeOut14 0.4s ease-out forwards; }
-.particle-15 { animation: explodeOut15 0.4s ease-out forwards; }
-.particle-16 { animation: explodeOut16 0.4s ease-out forwards; }
-.particle-17 { animation: explodeOut17 0.4s ease-out forwards; }
-.particle-18 { animation: explodeOut18 0.4s ease-out forwards; }
-.particle-19 { animation: explodeOut19 0.4s ease-out forwards; }
-.particle-20 { animation: explodeOut20 0.4s ease-out forwards; }
-.particle-21 { animation: explodeOut21 0.4s ease-out forwards; }
-.particle-22 { animation: explodeOut22 0.4s ease-out forwards; }
-.particle-23 { animation: explodeOut23 0.4s ease-out forwards; }
-.particle-24 { animation: explodeOut24 0.4s ease-out forwards; }
+/* 24 Rank particles positioned around rounded rectangle (approx 320px wide x 240px tall with 20px border-radius) */
+.particle-1 { animation: rectExplode1 0.4s ease-out forwards; }
+.particle-2 { animation: rectExplode2 0.4s ease-out forwards; }
+.particle-3 { animation: rectExplode3 0.4s ease-out forwards; }
+.particle-4 { animation: rectExplode4 0.4s ease-out forwards; }
+.particle-5 { animation: rectExplode5 0.4s ease-out forwards; }
+.particle-6 { animation: rectExplode6 0.4s ease-out forwards; }
+.particle-7 { animation: rectExplode7 0.4s ease-out forwards; }
+.particle-8 { animation: rectExplode8 0.4s ease-out forwards; }
+.particle-9 { animation: rectExplode9 0.4s ease-out forwards; }
+.particle-10 { animation: rectExplode10 0.4s ease-out forwards; }
+.particle-11 { animation: rectExplode11 0.4s ease-out forwards; }
+.particle-12 { animation: rectExplode12 0.4s ease-out forwards; }
+.particle-13 { animation: rectExplode13 0.4s ease-out forwards; }
+.particle-14 { animation: rectExplode14 0.4s ease-out forwards; }
+.particle-15 { animation: rectExplode15 0.4s ease-out forwards; }
+.particle-16 { animation: rectExplode16 0.4s ease-out forwards; }
+.particle-17 { animation: rectExplode17 0.4s ease-out forwards; }
+.particle-18 { animation: rectExplode18 0.4s ease-out forwards; }
+.particle-19 { animation: rectExplode19 0.4s ease-out forwards; }
+.particle-20 { animation: rectExplode20 0.4s ease-out forwards; }
+.particle-21 { animation: rectExplode21 0.4s ease-out forwards; }
+.particle-22 { animation: rectExplode22 0.4s ease-out forwards; }
+.particle-23 { animation: rectExplode23 0.4s ease-out forwards; }
+.particle-24 { animation: rectExplode24 0.4s ease-out forwards; }
 
-/* Tight 150px radius with double rotation (720deg) */
-@keyframes explodeOut1 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 150px), calc(-50% + 0px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut2 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 140px), calc(-50% + 53px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut3 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 106px), calc(-50% + 106px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut4 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 53px), calc(-50% + 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut5 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 0px), calc(-50% + 150px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut6 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 53px), calc(-50% + 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut7 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 106px), calc(-50% + 106px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut8 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 140px), calc(-50% + 53px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut9 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 150px), calc(-50% + 0px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut10 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 140px), calc(-50% - 53px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut11 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 106px), calc(-50% - 106px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut12 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 53px), calc(-50% - 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut13 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 0px), calc(-50% - 150px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut14 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 53px), calc(-50% - 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut15 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 106px), calc(-50% - 106px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut16 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 140px), calc(-50% - 53px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut17 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 130px), calc(-50% + 25px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut18 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 75px), calc(-50% + 125px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut19 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 25px), calc(-50% + 130px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut20 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 125px), calc(-50% + 75px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut21 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 130px), calc(-50% - 25px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut22 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 75px), calc(-50% - 125px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut23 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 25px), calc(-50% - 130px)) scale(1.1) rotate(720deg); opacity: 0; } }
-@keyframes explodeOut24 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 125px), calc(-50% - 75px)) scale(1.1) rotate(720deg); opacity: 0; } }
+/* Top edge particles (6 particles) */
+@keyframes rectExplode1 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 140px), calc(-50% - 120px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode2 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 80px), calc(-50% - 120px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode3 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 20px), calc(-50% - 120px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode4 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 40px), calc(-50% - 120px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode5 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 100px), calc(-50% - 120px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode6 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 160px), calc(-50% - 120px)) scale(1.1) rotate(720deg); opacity: 0; } }
 
-/* 30 Sparkles - tight 160px radius and bright */
-.sparkle-1 { animation: sparkleOut1 0.4s ease-out forwards; }
-.sparkle-2 { animation: sparkleOut2 0.4s ease-out forwards; }
-.sparkle-3 { animation: sparkleOut3 0.4s ease-out forwards; }
-.sparkle-4 { animation: sparkleOut4 0.4s ease-out forwards; }
-.sparkle-5 { animation: sparkleOut5 0.4s ease-out forwards; }
-.sparkle-6 { animation: sparkleOut6 0.4s ease-out forwards; }
-.sparkle-7 { animation: sparkleOut7 0.4s ease-out forwards; }
-.sparkle-8 { animation: sparkleOut8 0.4s ease-out forwards; }
-.sparkle-9 { animation: sparkleOut9 0.4s ease-out forwards; }
-.sparkle-10 { animation: sparkleOut10 0.4s ease-out forwards; }
-.sparkle-11 { animation: sparkleOut11 0.4s ease-out forwards; }
-.sparkle-12 { animation: sparkleOut12 0.4s ease-out forwards; }
-.sparkle-13 { animation: sparkleOut13 0.4s ease-out forwards; }
-.sparkle-14 { animation: sparkleOut14 0.4s ease-out forwards; }
-.sparkle-15 { animation: sparkleOut15 0.4s ease-out forwards; }
-.sparkle-16 { animation: sparkleOut16 0.4s ease-out forwards; }
-.sparkle-17 { animation: sparkleOut17 0.4s ease-out forwards; }
-.sparkle-18 { animation: sparkleOut18 0.4s ease-out forwards; }
-.sparkle-19 { animation: sparkleOut19 0.4s ease-out forwards; }
-.sparkle-20 { animation: sparkleOut20 0.4s ease-out forwards; }
-.sparkle-21 { animation: sparkleOut21 0.4s ease-out forwards; }
-.sparkle-22 { animation: sparkleOut22 0.4s ease-out forwards; }
-.sparkle-23 { animation: sparkleOut23 0.4s ease-out forwards; }
-.sparkle-24 { animation: sparkleOut24 0.4s ease-out forwards; }
-.sparkle-25 { animation: sparkleOut25 0.4s ease-out forwards; }
-.sparkle-26 { animation: sparkleOut26 0.4s ease-out forwards; }
-.sparkle-27 { animation: sparkleOut27 0.4s ease-out forwards; }
-.sparkle-28 { animation: sparkleOut28 0.4s ease-out forwards; }
-.sparkle-29 { animation: sparkleOut29 0.4s ease-out forwards; }
-.sparkle-30 { animation: sparkleOut30 0.4s ease-out forwards; }
+/* Right edge particles (4 particles) */
+@keyframes rectExplode7 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 180px), calc(-50% - 80px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode8 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 180px), calc(-50% - 25px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode9 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 180px), calc(-50% + 30px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode10 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 180px), calc(-50% + 85px)) scale(1.1) rotate(720deg); opacity: 0; } }
 
-@keyframes sparkleOut1 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 160px), calc(-50% + 10px)) scale(1.5); opacity: 0; } }
-@keyframes sparkleOut2 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 145px), calc(-50% + 65px)) scale(1.6); opacity: 0; } }
-@keyframes sparkleOut3 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 115px), calc(-50% + 115px)) scale(1.4); opacity: 0; } }
-@keyframes sparkleOut4 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 65px), calc(-50% + 145px)) scale(1.7); opacity: 0; } }
-@keyframes sparkleOut5 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 10px), calc(-50% + 160px)) scale(1.5); opacity: 0; } }
-@keyframes sparkleOut6 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 65px), calc(-50% + 145px)) scale(1.6); opacity: 0; } }
-@keyframes sparkleOut7 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 115px), calc(-50% + 115px)) scale(1.4); opacity: 0; } }
-@keyframes sparkleOut8 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 145px), calc(-50% + 65px)) scale(1.7); opacity: 0; } }
-@keyframes sparkleOut9 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 160px), calc(-50% + 10px)) scale(1.5); opacity: 0; } }
-@keyframes sparkleOut10 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 145px), calc(-50% - 65px)) scale(1.6); opacity: 0; } }
-@keyframes sparkleOut11 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 115px), calc(-50% - 115px)) scale(1.4); opacity: 0; } }
-@keyframes sparkleOut12 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 65px), calc(-50% - 145px)) scale(1.7); opacity: 0; } }
-@keyframes sparkleOut13 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 10px), calc(-50% - 160px)) scale(1.5); opacity: 0; } }
-@keyframes sparkleOut14 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 65px), calc(-50% - 145px)) scale(1.6); opacity: 0; } }
-@keyframes sparkleOut15 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 115px), calc(-50% - 115px)) scale(1.4); opacity: 0; } }
-@keyframes sparkleOut16 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 145px), calc(-50% - 65px)) scale(1.7); opacity: 0; } }
-@keyframes sparkleOut17 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 155px), calc(-50% + 40px)) scale(1.5); opacity: 0; } }
-@keyframes sparkleOut18 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 90px), calc(-50% + 135px)) scale(1.6); opacity: 0; } }
-@keyframes sparkleOut19 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 40px), calc(-50% + 155px)) scale(1.4); opacity: 0; } }
-@keyframes sparkleOut20 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 135px), calc(-50% + 90px)) scale(1.7); opacity: 0; } }
-@keyframes sparkleOut21 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 155px), calc(-50% - 40px)) scale(1.5); opacity: 0; } }
-@keyframes sparkleOut22 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 90px), calc(-50% - 135px)) scale(1.6); opacity: 0; } }
-@keyframes sparkleOut23 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 40px), calc(-50% - 155px)) scale(1.4); opacity: 0; } }
-@keyframes sparkleOut24 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 135px), calc(-50% - 90px)) scale(1.7); opacity: 0; } }
-@keyframes sparkleOut25 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 150px), calc(-50% - 30px)) scale(1.5); opacity: 0; } }
-@keyframes sparkleOut26 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 100px), calc(-50% + 130px)) scale(1.6); opacity: 0; } }
-@keyframes sparkleOut27 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 30px), calc(-50% + 150px)) scale(1.4); opacity: 0; } }
-@keyframes sparkleOut28 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 130px), calc(-50% + 100px)) scale(1.7); opacity: 0; } }
-@keyframes sparkleOut29 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 150px), calc(-50% - 30px)) scale(1.5); opacity: 0; } }
-@keyframes sparkleOut30 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 100px), calc(-50% - 130px)) scale(1.6); opacity: 0; } }
+/* Bottom edge particles (6 particles) */
+@keyframes rectExplode11 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 160px), calc(-50% + 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode12 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 100px), calc(-50% + 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode13 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 40px), calc(-50% + 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode14 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 20px), calc(-50% + 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode15 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 80px), calc(-50% + 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode16 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 140px), calc(-50% + 140px)) scale(1.1) rotate(720deg); opacity: 0; } }
 
-/* Modal animations - quicker entrance */
+/* Left edge particles (4 particles) */
+@keyframes rectExplode17 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 180px), calc(-50% + 85px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode18 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 180px), calc(-50% + 30px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode19 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 180px), calc(-50% - 25px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode20 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 180px), calc(-50% - 80px)) scale(1.1) rotate(720deg); opacity: 0; } }
+
+/* Corner particles (4 particles at rounded corners) */
+@keyframes rectExplode21 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 170px), calc(-50% - 110px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode22 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% + 170px), calc(-50% + 130px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode23 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 170px), calc(-50% + 130px)) scale(1.1) rotate(720deg); opacity: 0; } }
+@keyframes rectExplode24 { 0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; } 100% { transform: translate(calc(-50% - 170px), calc(-50% - 110px)) scale(1.1) rotate(720deg); opacity: 0; } }
+
+/* 30 Sparkles positioned around and between rank particles */
+.sparkle-1 { animation: sparkleRect1 0.4s ease-out forwards; }
+.sparkle-2 { animation: sparkleRect2 0.4s ease-out forwards; }
+.sparkle-3 { animation: sparkleRect3 0.4s ease-out forwards; }
+.sparkle-4 { animation: sparkleRect4 0.4s ease-out forwards; }
+.sparkle-5 { animation: sparkleRect5 0.4s ease-out forwards; }
+.sparkle-6 { animation: sparkleRect6 0.4s ease-out forwards; }
+.sparkle-7 { animation: sparkleRect7 0.4s ease-out forwards; }
+.sparkle-8 { animation: sparkleRect8 0.4s ease-out forwards; }
+.sparkle-9 { animation: sparkleRect9 0.4s ease-out forwards; }
+.sparkle-10 { animation: sparkleRect10 0.4s ease-out forwards; }
+.sparkle-11 { animation: sparkleRect11 0.4s ease-out forwards; }
+.sparkle-12 { animation: sparkleRect12 0.4s ease-out forwards; }
+.sparkle-13 { animation: sparkleRect13 0.4s ease-out forwards; }
+.sparkle-14 { animation: sparkleRect14 0.4s ease-out forwards; }
+.sparkle-15 { animation: sparkleRect15 0.4s ease-out forwards; }
+.sparkle-16 { animation: sparkleRect16 0.4s ease-out forwards; }
+.sparkle-17 { animation: sparkleRect17 0.4s ease-out forwards; }
+.sparkle-18 { animation: sparkleRect18 0.4s ease-out forwards; }
+.sparkle-19 { animation: sparkleRect19 0.4s ease-out forwards; }
+.sparkle-20 { animation: sparkleRect20 0.4s ease-out forwards; }
+.sparkle-21 { animation: sparkleRect21 0.4s ease-out forwards; }
+.sparkle-22 { animation: sparkleRect22 0.4s ease-out forwards; }
+.sparkle-23 { animation: sparkleRect23 0.4s ease-out forwards; }
+.sparkle-24 { animation: sparkleRect24 0.4s ease-out forwards; }
+.sparkle-25 { animation: sparkleRect25 0.4s ease-out forwards; }
+.sparkle-26 { animation: sparkleRect26 0.4s ease-out forwards; }
+.sparkle-27 { animation: sparkleRect27 0.4s ease-out forwards; }
+.sparkle-28 { animation: sparkleRect28 0.4s ease-out forwards; }
+.sparkle-29 { animation: sparkleRect29 0.4s ease-out forwards; }
+.sparkle-30 { animation: sparkleRect30 0.4s ease-out forwards; }
+
+/* Top edge sparkles */
+@keyframes sparkleRect1 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 150px), calc(-50% - 140px)) scale(1.6); opacity: 0; } }
+@keyframes sparkleRect2 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 100px), calc(-50% - 140px)) scale(1.5); opacity: 0; } }
+@keyframes sparkleRect3 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 50px), calc(-50% - 140px)) scale(1.7); opacity: 0; } }
+@keyframes sparkleRect4 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 10px), calc(-50% - 140px)) scale(1.4); opacity: 0; } }
+@keyframes sparkleRect5 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 70px), calc(-50% - 140px)) scale(1.6); opacity: 0; } }
+@keyframes sparkleRect6 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 130px), calc(-50% - 140px)) scale(1.5); opacity: 0; } }
+@keyframes sparkleRect7 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 180px), calc(-50% - 130px)) scale(1.7); opacity: 0; } }
+
+/* Right edge sparkles */
+@keyframes sparkleRect8 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 200px), calc(-50% - 90px)) scale(1.5); opacity: 0; } }
+@keyframes sparkleRect9 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 200px), calc(-50% - 50px)) scale(1.6); opacity: 0; } }
+@keyframes sparkleRect10 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 200px), calc(-50% + 0px)) scale(1.4); opacity: 0; } }
+@keyframes sparkleRect11 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 200px), calc(-50% + 50px)) scale(1.7); opacity: 0; } }
+@keyframes sparkleRect12 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 200px), calc(-50% + 100px)) scale(1.5); opacity: 0; } }
+@keyframes sparkleRect13 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 180px), calc(-50% + 145px)) scale(1.6); opacity: 0; } }
+
+/* Bottom edge sparkles */
+@keyframes sparkleRect14 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 130px), calc(-50% + 160px)) scale(1.5); opacity: 0; } }
+@keyframes sparkleRect15 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 70px), calc(-50% + 160px)) scale(1.7); opacity: 0; } }
+@keyframes sparkleRect16 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 10px), calc(-50% + 160px)) scale(1.4); opacity: 0; } }
+@keyframes sparkleRect17 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 50px), calc(-50% + 160px)) scale(1.6); opacity: 0; } }
+@keyframes sparkleRect18 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 110px), calc(-50% + 160px)) scale(1.5); opacity: 0; } }
+@keyframes sparkleRect19 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 160px), calc(-50% + 160px)) scale(1.7); opacity: 0; } }
+@keyframes sparkleRect20 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 180px), calc(-50% + 145px)) scale(1.4); opacity: 0; } }
+
+/* Left edge sparkles */
+@keyframes sparkleRect21 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 200px), calc(-50% + 100px)) scale(1.6); opacity: 0; } }
+@keyframes sparkleRect22 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 200px), calc(-50% + 50px)) scale(1.5); opacity: 0; } }
+@keyframes sparkleRect23 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 200px), calc(-50% + 0px)) scale(1.7); opacity: 0; } }
+@keyframes sparkleRect24 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 200px), calc(-50% - 50px)) scale(1.4); opacity: 0; } }
+@keyframes sparkleRect25 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 200px), calc(-50% - 90px)) scale(1.6); opacity: 0; } }
+@keyframes sparkleRect26 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 180px), calc(-50% - 130px)) scale(1.5); opacity: 0; } }
+
+/* Corner sparkles */
+@keyframes sparkleRect27 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 190px), calc(-50% - 120px)) scale(1.7); opacity: 0; } }
+@keyframes sparkleRect28 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% + 190px), calc(-50% + 145px)) scale(1.6); opacity: 0; } }
+@keyframes sparkleRect29 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 190px), calc(-50% + 145px)) scale(1.5); opacity: 0; } }
+@keyframes sparkleRect30 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(calc(-50% - 190px), calc(-50% - 120px)) scale(1.7); opacity: 0; } }
+
+/* Modal animations */
 .modal-overlay-delayed {
   animation: fadeIn 0.2s 0.3s ease both;
 }
